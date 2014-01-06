@@ -180,9 +180,8 @@
         * `name`: 用户名
         * `level`: 权限
         * `regist_date`: 注册时间
-        * `favor`: 喜欢歌曲数
         * `listened`: 听过歌曲数
-        * `skipped`: 跳过歌曲数
+        * `favor`: 喜欢歌曲数
         * `dislike`: 讨厌歌曲数
 
     * Notes:
@@ -214,10 +213,10 @@
         * `name`: 用户名
         * `level`: 权限
         * `regist_date`: 注册时间
-        * `favor`: 喜欢歌曲数
         * `listened`: 听过歌曲数
-        * `skipped`: 跳过歌曲数
+        * `favor`: 喜欢歌曲数
         * `dislike`: 不喜欢歌曲数
+
 ---
 
 ### URL: `/api/user/current/`
