@@ -40,3 +40,6 @@ nosetests.xml
 
 # OSX
 .DS_Store
+
+# nosetest
+cover/

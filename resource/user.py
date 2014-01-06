@@ -124,10 +124,7 @@ class UserCurrentResource(Resource):
 
     def post(self):
         args = UserLoginArgs().args
-        try:
-            user = get_user(name=args['name'])[0]
-        except:
-            return None
+        user = get_user(name=args['name'])[0]
         if check_user_password(user, args['password']) and check_user_enable(user):
             session['user'] = user.key
             return marshal(user, user_fields)

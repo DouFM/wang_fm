@@ -15,5 +15,5 @@ ADMIN_NAME = 'admin'
 ADMIN_PASSWORD = 'admin'
 
 # spider settings
-DOUBAN_USER_NAME = 'username'
-DOUBAN_USER_PASSWORD = 'password'
+DOUBAN_USER_NAME = 'admin@doufm.info'
+DOUBAN_USER_PASSWORD = '7MRrbGozZkrx'

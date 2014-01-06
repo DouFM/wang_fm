@@ -28,6 +28,3 @@ api.add_resource(UserCurrentHistoryResource, '/api/user/current/history/')
 api.add_resource(UserCurrentFavorResource, '/api/user/current/favor/')
 
 app.secret_key = SECRET_KEY
-
-if __name__ == '__main__':
-    app.run()

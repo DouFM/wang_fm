@@ -9,11 +9,6 @@ class FileField(fields.Raw):
         return "/api/fs/%s/" % (value._id)
 
 
-class BoolField(fields.Raw):
-    def format(self, value):
-        return value
-
-
 class LengthField(fields.Raw):
     def format(self, value):
         return len(value)
