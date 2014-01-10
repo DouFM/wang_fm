@@ -28,3 +28,11 @@ api.add_resource(UserCurrentHistoryResource, '/api/user/current/history/')
 api.add_resource(UserCurrentFavorResource, '/api/user/current/favor/')
 
 app.secret_key = SECRET_KEY
+
+# templates
+from flask import render_template
+
+
+@app.route('/')
+def index():
+    return render_template("demo.html")
