@@ -5,6 +5,7 @@ import mongoengine
 
 class BaseMongoStorage(object):
     '''adapter for MongoDB'''
+
     def save(self):
         '''save obj to db'''
         mongoengine.Document.save(self)

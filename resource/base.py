@@ -25,6 +25,7 @@ class RequestParser(reqparse.RequestParser):
 class BaseArgs(object):
     '''base args class, subclass should implete rules.
     use self.args to get args in request'''
+
     def __init__(self):
         self.parser = RequestParser()
         self.rules()

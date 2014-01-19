@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 #coding:utf8
-from flask.ext.script import Manager
 from apscheduler.scheduler import Scheduler
+
+from flask.ext.script import Manager
 from fm import app
 from model.user import add_user
 from spider.douban import login, update_channel_list, update_music_by_channel
 from model.channel import get_channel, update_channel
 from tasks.spider_task import douban_spider_task
 from config import ADMIN_NAME, ADMIN_PASSWORD
+
 manager = Manager(app)
 
 

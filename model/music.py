@@ -5,7 +5,7 @@ from storage.music import MusicStorage
 
 
 def add_music(title, artist, album, company, public_time,
-        kbps, cover_fd, audio_fd, uuid):
+              kbps, cover_fd, audio_fd, uuid):
     '''add new music, return music obj'''
     music = MusicStorage()
     music.title = title

@@ -25,7 +25,7 @@ class test_playlist_model(BaseTest):
             self.cover.seek(0)
             self.audio.seek(0)
             music = add_music(title, artist, album, company, public_time,
-                    kbps, self.cover, self.audio, uuid+ str(i))
+                              kbps, self.cover, self.audio, uuid + str(i))
             new_music_list.append(music.key)
         update_channel(channel, music_list=new_music_list)
         channel = get_channel(key=channel.key)[0]

@@ -29,7 +29,9 @@ def authenticated(*req):
             if user_level not in req:
                 abort(403)
             return method(self, *args, **kwargs)
+
         return wrapper
+
     return actualDecorator
 
 
@@ -37,6 +39,7 @@ class BaseTest(object):
     '''the base test class
     change default db to TEST_DB_NAME.
     clean db before test'''
+
     def setup(self):
         mongoengine.register_connection(mongoengine.DEFAULT_CONNECTION_NAME, TEST_DB_NAME, DB_HOST, DB_PORT)
         # TODO
@@ -60,17 +63,19 @@ class BaseTest(object):
 class BaseResourceTest(BaseTest):
     '''the base resource test
     handle app config'''
+
     def setup(self):
         super(BaseResourceTest, self).setup()
         import fm
+
         fm.app.config['TESTING'] = True
         self.app = fm.app.test_client()
 
     def login_as_admin(self):
         add_user('admin', 'admin', 'admin')
         self.app.post('/api/user/current/',
-                data={'name': 'admin',
-                    'password': 'admin'})
+                      data={'name': 'admin',
+                            'password': 'admin'})
 
     def logout(self):
         self.app.delete('/api/user/current/')

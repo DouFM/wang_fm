@@ -16,10 +16,10 @@ class test_music_model(BaseTest):
         kbps = '64'
         uuid = 'douban-uuid'
         music = add_music(title, artist, album, company,
-                public_time, kbps, self.cover, self.audio, uuid)
+                          public_time, kbps, self.cover, self.audio, uuid)
         try:
             add_music(title, artist, album, company,
-                    public_time, kbps, self.cover, self.audio, uuid)
+                      public_time, kbps, self.cover, self.audio, uuid)
         except mongoengine.errors.NotUniqueError:
             pass
         assert len(get_music(key=music.key)) == 1
@@ -45,14 +45,14 @@ class test_music_model(BaseTest):
         kbps = '64'
         uuid = 'douban-uuid'
         music = add_music(title, artist, album, company,
-                public_time, kbps, self.cover, self.audio, uuid)
+                          public_time, kbps, self.cover, self.audio, uuid)
         self.cover.seek(0)
         self.audio.seek(0)
         music = get_music()[0]
         # exchange cover & audio
         update_music(music, title='new_title', artist='new_artist',
-                album='new_album', company='new_company', public_time='2014',
-                kbps='128', cover=self.audio, audio=self.cover, uuid='new_douban-uuid')
+                     album='new_album', company='new_company', public_time='2014',
+                     kbps='128', cover=self.audio, audio=self.cover, uuid='new_douban-uuid')
         music = get_music()[0]
         assert music.title == 'new_title'
         assert music.artist == 'new_artist'
@@ -75,7 +75,7 @@ class test_music_model(BaseTest):
         kbps = '64'
         uuid = 'douban-uuid'
         music = add_music(title, artist, album, company,
-                public_time, kbps, self.cover, self.audio, uuid)
+                          public_time, kbps, self.cover, self.audio, uuid)
         assert len(get_music()) == 1
         music = get_music()[0]
         delete_music(music)
@@ -91,7 +91,7 @@ class test_music_model(BaseTest):
         uuid = 'douban-uuid'
         for i in range(10):
             add_music(title, artist, album, company, public_time,
-                    kbps, self.cover, self.audio, uuid + str(i))
+                      kbps, self.cover, self.audio, uuid + str(i))
         assert len(get_music(start=0, end=5)) == 5
 
     def test_get_status(self):
@@ -104,5 +104,5 @@ class test_music_model(BaseTest):
         uuid = 'douban-uuid'
         for i in range(10):
             add_music(title, artist, album, company, public_time,
-                    kbps, self.cover, self.audio, uuid + str(i))
+                      kbps, self.cover, self.audio, uuid + str(i))
         assert get_music_status()['count'] == 10

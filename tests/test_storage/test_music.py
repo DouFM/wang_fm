@@ -63,8 +63,8 @@ class test_music_storage(BaseTest):
         self.cover.seek(0)
         self.audio.seek(0)
         music.update(title='new_title', artist='new_artist', album='new_album',
-                company='new_company', public_time='2014', kbps='128',
-                cover=self.audio, audio=self.cover, uuid='new_douban-uuid')
+                     company='new_company', public_time='2014', kbps='128',
+                     cover=self.audio, audio=self.cover, uuid='new_douban-uuid')
         music = MusicStorage.get()[0]
         assert music.title == 'new_title'
         assert music.artist == 'new_artist'

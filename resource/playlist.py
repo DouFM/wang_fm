@@ -17,7 +17,6 @@ playlist_fields = {
     'music_list': LengthField,
 }
 
-
 music_fields = {
     'key': fields.String,
     'title': fields.String,

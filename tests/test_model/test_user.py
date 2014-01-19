@@ -80,11 +80,11 @@ class test_user_model(BaseTest):
         user = add_user('name1', 'pw1', 'normal')
         # add music
         music1 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid1')
+                           '2013', '64', self.cover, self.audio, 'uuid1')
         self.cover.seek(0)
         self.audio.seek(0)
         music2 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid2')
+                           '2013', '64', self.cover, self.audio, 'uuid2')
         add_user_history(user, 'favor', music1.key)
         add_user_history(user, 'dislike', music2.key)
         assert len(get_user_history(user, 0, 10)) == 2

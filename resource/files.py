@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask import Response
-from flask.ext.restful import Resource
 import mongoengine.fields
+
 from bson.objectid import ObjectId
+
+from flask.ext.restful import Resource
 
 
 class FileResource(Resource):

@@ -22,9 +22,9 @@ _expire = None
 
 def login():
     payload = {'app_name': DOUBAN_SPIDER_NAME,
-            'version': DOUBAN_SPIDER_VERSION,
-            'email': DOUBAN_USER_NAME,
-            'password': DOUBAN_USER_PASSWORD}
+               'version': DOUBAN_SPIDER_VERSION,
+               'email': DOUBAN_USER_NAME,
+               'password': DOUBAN_USER_PASSWORD}
     r = requests.post("http://www.douban.com/j/app/login", data=payload)
     r = json.loads(r.text)
     if r['r'] != 0:
@@ -62,12 +62,12 @@ def _update_channel_once(channel, max_num=10):
     assert channel.uuid.startswith(DOUBAN_CHANNEL_UUID_FORMAT.split('-')[0])
     cid = int(channel.uuid.split('-')[1])
     payload = {'app_name': DOUBAN_SPIDER_NAME,
-            'version': DOUBAN_SPIDER_VERSION,
-            'user_id': _user_id,
-            'expire': _expire,
-            'token': _token,
-            'channel': cid,
-            'type': 'n'}
+               'version': DOUBAN_SPIDER_VERSION,
+               'user_id': _user_id,
+               'expire': _expire,
+               'token': _token,
+               'channel': cid,
+               'type': 'n'}
     r = requests.get("http://www.douban.com/j/app/radio/people", params=payload)
     r = json.loads(r.text)
     assert r['r'] == 0
@@ -79,8 +79,8 @@ def _update_channel_once(channel, max_num=10):
             cover_fd = requests.get(song['picture'], stream=True).raw
             audio_fd = requests.get(song['url'], stream=True).raw
             music = add_music(song['title'], song['artist'], song['albumtitle'],
-                    song['company'], song['public_time'], song['kbps'],
-                    cover_fd, audio_fd, uuid)
+                              song['company'], song['public_time'], song['kbps'],
+                              cover_fd, audio_fd, uuid)
             update_music.append(music)
             if music.key not in channel_music_list:
                 channel_music_list.append(music.key)

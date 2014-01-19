@@ -8,19 +8,19 @@ from utils import BaseResourceTest
 class test_music_list_resource(BaseResourceTest):
     def test_get(self):
         music1 = add_music('title1', 'artist1', 'album1', 'company1',
-                '2001', '64', self.cover, self.audio, 'uuid1')
+                           '2001', '64', self.cover, self.audio, 'uuid1')
         self.cover.seek(0)
         self.audio.seek(0)
         add_music('title2', 'artist2', 'album2', 'company2',
-                '2001', '128', self.cover, self.audio, 'uuid2')
+                  '2001', '128', self.cover, self.audio, 'uuid2')
         self.cover.seek(0)
         self.audio.seek(0)
         add_music('title3', 'artist3', 'album3', 'company3',
-                '2004', '64', self.cover, self.audio, 'uuid3')
+                  '2004', '64', self.cover, self.audio, 'uuid3')
         self.cover.seek(0)
         self.audio.seek(0)
         add_music('title4', 'artist4', 'album4', 'company4',
-                '2004', '128', self.cover, self.audio, 'uuid4')
+                  '2004', '128', self.cover, self.audio, 'uuid4')
         rv = self.app.get('/api/music/?key=' + music1.key)
         # print json.loads(rv.data)
         assert len(json.loads(rv.data)) == 1
@@ -52,17 +52,17 @@ class test_music_resource(BaseResourceTest):
     def test_patch(self):
         self.login_as_admin()
         music = add_music('title', 'artist', 'album', 'company',
-                '2001', '64', self.cover, self.audio, 'uuid')
+                          '2001', '64', self.cover, self.audio, 'uuid')
         music_key = music.key
         rv = self.app.patch('/api/music/%s/' % (music_key),
-                data={'title': 'only_title'})
+                            data={'title': 'only_title'})
         rv_music = json.loads(rv.data)
         assert rv_music['title'] == 'only_title'
 
         rv = self.app.patch('/api/music/%s/' % (music_key),
-                data={'title': 'new_title', 'artist': 'new_artist',
-                    'album': 'new_album', 'company': 'new_company',
-                    'public_time': '2014', })
+                            data={'title': 'new_title', 'artist': 'new_artist',
+                                  'album': 'new_album', 'company': 'new_company',
+                                  'public_time': '2014', })
         rv_music = json.loads(rv.data)
         assert rv_music['title'] == 'new_title'
         assert rv_music['artist'] == 'new_artist'
@@ -73,7 +73,7 @@ class test_music_resource(BaseResourceTest):
     def test_delete(self):
         self.login_as_admin()
         music = add_music('title', 'artist', 'album', 'company',
-                '2001', '64', self.cover, self.audio, 'uuid')
+                          '2001', '64', self.cover, self.audio, 'uuid')
         music_key = music.key
         assert len(get_music(key=music_key)) == 1
         self.app.delete('/api/music/%s/' % (music_key))
