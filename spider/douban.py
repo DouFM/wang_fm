@@ -5,6 +5,7 @@ Ref:
 https://github.com/zonyitoo/doubanfm-qt/wiki/%E8%B1%86%E7%93%A3FM-API
 '''
 import json
+import random
 import traceback
 import requests
 from model.channel import get_channel, add_channel, update_channel
@@ -62,13 +63,25 @@ def _update_channel_once(channel, max_num=10):
     # maybe need a better method to assert and get cid
     assert channel.uuid.startswith(DOUBAN_CHANNEL_UUID_FORMAT.split('-')[0])
     cid = int(channel.uuid.split('-')[1])
-    payload = {'app_name': DOUBAN_SPIDER_NAME,
-               'version': DOUBAN_SPIDER_VERSION,
+    if channel.music_list == []:
+        payload = {'app_name': DOUBAN_SPIDER_NAME,
+                   'version': DOUBAN_SPIDER_VERSION,
                'user_id': _user_id,
                'expire': _expire,
                'token': _token,
                'channel': cid,
                'type': 'n'}
+    else:
+        uuid = get_music(key=random.choice(channel.music_list))[0].uuid
+        sid = uuid.split('-')[2]
+        payload = {'app_name': DOUBAN_SPIDER_NAME,
+                   'version': DOUBAN_SPIDER_VERSION,
+                   'user_id': _user_id,
+                   'expire': _expire,
+                   'token': _token,
+                   'channel': cid,
+                   'type': 'p',
+                   'sid': sid}
     try:
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
     except:
