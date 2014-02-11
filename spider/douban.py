@@ -93,6 +93,7 @@ def _update_channel_once(channel, max_num=10):
     #channel_music_list = channel.music_list
     for song in r['song']:
         uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
+        music = None
         if len(get_music(uuid=uuid)) == 0:
             try:
                 cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
@@ -103,6 +104,9 @@ def _update_channel_once(channel, max_num=10):
             music = add_music(song['title'], song['artist'], song['albumtitle'],
                               song['company'], song['public_time'], song['kbps'],
                               cover_fd, audio_fd, uuid)
+        else:
+            music = get_music(uuid=uuid)[0]
+        if music and music.key not in channel.music_list:
             channel_music_list = channel.music_list
             channel_music_list.append(music.key)
             update_channel(channel, music_list=channel_music_list)
