@@ -66,11 +66,11 @@ def _update_channel_once(channel, max_num=10):
     if channel.music_list == []:
         payload = {'app_name': DOUBAN_SPIDER_NAME,
                    'version': DOUBAN_SPIDER_VERSION,
-               'user_id': _user_id,
-               'expire': _expire,
-               'token': _token,
-               'channel': cid,
-               'type': 'n'}
+                   'user_id': _user_id,
+                   'expire': _expire,
+                   'token': _token,
+                   'channel': cid,
+                   'type': 'n'}
     else:
         uuid = get_music(key=random.choice(channel.music_list))[0].uuid
         sid = uuid.split('-')[2]
