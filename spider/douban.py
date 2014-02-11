@@ -5,6 +5,7 @@ Ref:
 https://github.com/zonyitoo/doubanfm-qt/wiki/%E8%B1%86%E7%93%A3FM-API
 '''
 import json
+import traceback
 import requests
 from model.channel import get_channel, add_channel, update_channel
 from model.music import get_music, add_music
@@ -69,8 +70,9 @@ def _update_channel_once(channel, max_num=10):
                'channel': cid,
                'type': 'n'}
     try:
-        r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=10)
+        r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
     except:
+        traceback.print_exc()
         return []
     r = json.loads(r.text)
     assert r['r'] == 0
@@ -80,9 +82,10 @@ def _update_channel_once(channel, max_num=10):
         uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
         if len(get_music(uuid=uuid)) == 0:
             try:
-                cover_fd = requests.get(song['picture'], stream=True, timeout=10).raw
-                audio_fd = requests.get(song['url'], stream=True, timeout=10).raw
+                cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
+                audio_fd = requests.get(song['url'], stream=True, timeout=5).raw
             except:
+                traceback.print_exc()
                 continue
             music = add_music(song['title'], song['artist'], song['albumtitle'],
                               song['company'], song['public_time'], song['kbps'],
