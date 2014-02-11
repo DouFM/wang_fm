@@ -69,7 +69,7 @@ def _update_channel_once(channel, max_num=10):
                'channel': cid,
                'type': 'n'}
     try:
-        r = requests.get("http://www.douban.com/j/app/radio/people", params=payload)
+        r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=10)
     except:
         return []
     r = json.loads(r.text)
@@ -80,8 +80,8 @@ def _update_channel_once(channel, max_num=10):
         uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
         if len(get_music(uuid=uuid)) == 0:
             try:
-                cover_fd = requests.get(song['picture'], stream=True).raw
-                audio_fd = requests.get(song['url'], stream=True).raw
+                cover_fd = requests.get(song['picture'], stream=True, timeout=10).raw
+                audio_fd = requests.get(song['url'], stream=True, timeout=10).raw
             except:
                 continue
             music = add_music(song['title'], song['artist'], song['albumtitle'],
