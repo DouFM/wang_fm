@@ -42,6 +42,7 @@ def update_channel_num(uuid, num):
     num = int(num)
     print uuid, num
     channel = get_channel(uuid=uuid)[0]
+    assert login(), 'check the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
     music_list = update_music_by_channel(channel, num)
     assert len(music_list) == num
     print 'update %s %s %s for %d music' % (
@@ -51,6 +52,7 @@ def update_channel_num(uuid, num):
 @manager.command
 def auto_update():
     '''update until stop manually'''
+    assert login(), 'check the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
     channels = get_channel(playable=True)
     while True:
         channel = random.choice(channels)
