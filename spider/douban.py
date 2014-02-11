@@ -72,7 +72,7 @@ def _update_channel_once(channel, max_num=10):
     r = json.loads(r.text)
     assert r['r'] == 0
     update_music = []
-    channel_music_list = channel.music_list
+    #channel_music_list = channel.music_list
     for song in r['song']:
         uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
         if len(get_music(uuid=uuid)) == 0:
@@ -81,12 +81,12 @@ def _update_channel_once(channel, max_num=10):
             music = add_music(song['title'], song['artist'], song['albumtitle'],
                               song['company'], song['public_time'], song['kbps'],
                               cover_fd, audio_fd, uuid)
+            channel_music_list = channel.music_list
+            channel_music_list.append(music.key)
+            update_channel(channel, music_list=channel_music_list)
             update_music.append(music)
-            if music.key not in channel_music_list:
-                channel_music_list.append(music.key)
             if len(update_music) >= max_num:
                 break
-    update_channel(channel, music_list=channel_music_list)
     return update_music
 
 
