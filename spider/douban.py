@@ -102,8 +102,13 @@ def _update_channel_once(channel, max_num=10):
 def update_music_by_channel(channel, num):
     '''update the music in channel, music count is num'''
     updated_music = []
+    retry = 0
     while num > 0:
         music_list = _update_channel_once(channel, num)
         updated_music.extend(music_list)
         num -= len(music_list)
+        if music_list == []:
+            retry += 1
+            if retry > 5:
+                break
     return updated_music
