@@ -92,7 +92,10 @@ def _update_channel_once(channel, max_num=10):
                    'channel': cid,
                    'type': 'e',
                    'sid': sid}
-        requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        try:
+            requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        except:
+            pass
 
         # don't play again
         mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
@@ -103,7 +106,10 @@ def _update_channel_once(channel, max_num=10):
                         'channel': cid,
                         'type': 'b',
                         'sid': sid}
-        requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        try:
+            requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        except:
+            pass
     try:
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
     except:
