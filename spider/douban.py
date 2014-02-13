@@ -83,33 +83,33 @@ def _update_channel_once(channel, max_num=10):
                    'type': 'p',
                    'sid': sid}
 
-        # mark as listened
-        mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
-                        'version': DOUBAN_SPIDER_VERSION,
-                   'user_id': _user_id,
-                   'expire': _expire,
-                   'token': _token,
-                   'channel': cid,
-                   'type': 'e',
-                   'sid': sid}
-        try:
-            requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
-        except:
-            pass
+        # # mark as listened
+        # mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
+        #                 'version': DOUBAN_SPIDER_VERSION,
+        #                 'user_id': _user_id,
+        #                 'expire': _expire,
+        #                 'token': _token,
+        #                 'channel': cid,
+        #                 'type': 'e',
+        #                 'sid': sid}
+        # try:
+        #     requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        # except:
+        #     pass
 
-        # don't play again
-        mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
-                        'version': DOUBAN_SPIDER_VERSION,
-                        'user_id': _user_id,
-                        'expire': _expire,
-                        'token': _token,
-                        'channel': cid,
-                        'type': 'b',
-                        'sid': sid}
-        try:
-            requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
-        except:
-            pass
+        # # don't play again
+        # mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
+        #                 'version': DOUBAN_SPIDER_VERSION,
+        #                 'user_id': _user_id,
+        #                 'expire': _expire,
+        #                 'token': _token,
+        #                 'channel': cid,
+        #                 'type': 'b',
+        #                 'sid': sid}
+        # try:
+        #     requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        # except:
+        #     pass
     try:
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
     except:
@@ -120,7 +120,11 @@ def _update_channel_once(channel, max_num=10):
     update_music = []
     #channel_music_list = channel.music_list
     for song in r['song']:
-        uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
+        try:
+            uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
+        except:
+            # ads
+            continue
         music = None
         if len(get_music(uuid=uuid)) == 0:
             try:
