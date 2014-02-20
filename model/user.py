@@ -77,7 +77,7 @@ def add_user_history(user, op, music_key):
         new_listened += 1
 
     update_user(user, history=new_history, favor=new_favor,
-            dislike=new_dislike, listened=new_listened)
+                dislike=new_dislike, listened=new_listened)
 
 
 def get_user_history(user, start, end):
@@ -90,10 +90,10 @@ def get_user_history(user, start, end):
         history.append(music.title)
         history.append(music.cover)
         new_historys.append({'date': history[0],
-            'op': history[1],
-            'key': history[2],
-            'title': history[3],
-            'cover': history[4]})
+                             'op': history[1],
+                             'key': history[2],
+                             'title': history[3],
+                             'cover': history[4]})
     return new_historys
 
 

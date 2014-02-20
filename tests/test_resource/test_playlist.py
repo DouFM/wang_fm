@@ -36,7 +36,7 @@ class test_playlist_resource(BaseResourceTest):
             self.cover.seek(0)
             self.audio.seek(0)
             music = add_music(title, artist, album, company, public_time,
-                    kbps, self.cover, self.audio, uuid+ str(i))
+                              kbps, self.cover, self.audio, uuid + str(i))
             new_music_list.append(music.key)
         update_channel(channel, music_list=new_music_list)
         rv = self.app.get('/api/playlist/%s/?num=10' % (channel.key))

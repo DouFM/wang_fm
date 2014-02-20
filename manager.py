@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 #coding:utf8
-from flask.ext.script import Manager
+import random
+import datetime
 from apscheduler.scheduler import Scheduler
+
+from flask.ext.script import Manager
 from fm import app
 from model.user import add_user
 from spider.douban import login, update_channel_list, update_music_by_channel
 from model.channel import get_channel, update_channel
 from tasks.spider_task import douban_spider_task
 from config import ADMIN_NAME, ADMIN_PASSWORD
+
 manager = Manager(app)
 
 
@@ -30,6 +34,61 @@ def setup():
     assert len(music_list) == 1
     print 'add demo channel to playlist'
     update_channel(channel, playable=True)
+
+
+@manager.command
+def update_channel_num(uuid, num):
+    '''update channel by uuid and num'''
+    num = int(num)
+    print uuid, num
+    channel = get_channel(uuid=uuid)[0]
+    assert login(), 'check the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
+    music_list = update_music_by_channel(channel, num)
+    assert len(music_list) == num
+    print 'update %s %s %s for %d music' % (
+        channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), num)
+
+
+@manager.command
+def auto_update():
+    '''update until stop manually'''
+    assert login(), 'check the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
+    channels = get_channel(playable=True)
+    while True:
+        channel = random.choice(channels)
+        print datetime.datetime.now()
+        print '%s\t\t%s\t\t%s' % (channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list))
+        music_list = update_music_by_channel(channel, 5)
+        print '%s\t\t%s\t\t%s' % (channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list))
+
+
+@manager.command
+def channels(uuid=None):
+    '''get one/all channels in db'''
+    if not uuid:
+        print 'uuid\t\tname\t\tmusic_num\t\tplayable'
+        for channel in get_channel():
+            print '%s\t\t%s\t\t%s\t\t%s' % (
+                channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), channel.playable)
+    else:
+        channel = get_channel(uuid=uuid)[0]
+        print 'uuid\t\tname'
+        print '%s\t\t%s\t\t%s\t\t%s' % (
+            channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), channel.playable)
+
+
+@manager.command
+def enable_channel(uuid):
+    '''set channel playable'''
+    channel = get_channel(uuid=uuid)[0]
+    update_channel(channel, playable=True)
+
+
+@manager.command
+def disable_channel(uuid):
+    '''set channel not playable'''
+    channel = get_channel(uuid=uuid)[0]
+    update_channel(channel, playable=False)
 
 
 @manager.command

@@ -5,6 +5,8 @@ Ref:
 https://github.com/zonyitoo/doubanfm-qt/wiki/%E8%B1%86%E7%93%A3FM-API
 '''
 import json
+import random
+import traceback
 import requests
 from model.channel import get_channel, add_channel, update_channel
 from model.music import get_music, add_music
@@ -22,9 +24,9 @@ _expire = None
 
 def login():
     payload = {'app_name': DOUBAN_SPIDER_NAME,
-            'version': DOUBAN_SPIDER_VERSION,
-            'email': DOUBAN_USER_NAME,
-            'password': DOUBAN_USER_PASSWORD}
+               'version': DOUBAN_SPIDER_VERSION,
+               'email': DOUBAN_USER_NAME,
+               'password': DOUBAN_USER_PASSWORD}
     r = requests.post("http://www.douban.com/j/app/login", data=payload)
     r = json.loads(r.text)
     if r['r'] != 0:
@@ -61,40 +63,101 @@ def _update_channel_once(channel, max_num=10):
     # maybe need a better method to assert and get cid
     assert channel.uuid.startswith(DOUBAN_CHANNEL_UUID_FORMAT.split('-')[0])
     cid = int(channel.uuid.split('-')[1])
-    payload = {'app_name': DOUBAN_SPIDER_NAME,
-            'version': DOUBAN_SPIDER_VERSION,
-            'user_id': _user_id,
-            'expire': _expire,
-            'token': _token,
-            'channel': cid,
-            'type': 'n'}
-    r = requests.get("http://www.douban.com/j/app/radio/people", params=payload)
+    if channel.music_list == []:
+        payload = {'app_name': DOUBAN_SPIDER_NAME,
+                   'version': DOUBAN_SPIDER_VERSION,
+                   'user_id': _user_id,
+                   'expire': _expire,
+                   'token': _token,
+                   'channel': cid,
+                   'type': 'n'}
+    else:
+        uuid = get_music(key=random.choice(channel.music_list))[0].uuid
+        sid = uuid.split('-')[2]
+        payload = {'app_name': DOUBAN_SPIDER_NAME,
+                   'version': DOUBAN_SPIDER_VERSION,
+                   'user_id': _user_id,
+                   'expire': _expire,
+                   'token': _token,
+                   'channel': cid,
+                   'type': 'p',
+                   'sid': sid}
+
+        # # mark as listened
+        # mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
+        #                 'version': DOUBAN_SPIDER_VERSION,
+        #                 'user_id': _user_id,
+        #                 'expire': _expire,
+        #                 'token': _token,
+        #                 'channel': cid,
+        #                 'type': 'e',
+        #                 'sid': sid}
+        # try:
+        #     requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        # except:
+        #     pass
+
+        # # don't play again
+        # mark_payload = {'app_name': DOUBAN_SPIDER_NAME,
+        #                 'version': DOUBAN_SPIDER_VERSION,
+        #                 'user_id': _user_id,
+        #                 'expire': _expire,
+        #                 'token': _token,
+        #                 'channel': cid,
+        #                 'type': 'b',
+        #                 'sid': sid}
+        # try:
+        #     requests.get("http://www.douban.com/j/app/radio/people", params=mark_payload, timeout=5)
+        # except:
+        #     pass
+    try:
+        r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
+    except:
+        traceback.print_exc()
+        return []
     r = json.loads(r.text)
     assert r['r'] == 0
     update_music = []
-    channel_music_list = channel.music_list
+    #channel_music_list = channel.music_list
     for song in r['song']:
-        uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
+        try:
+            uuid = DOUBAN_MUSIC_UUID_FORMAT % (int(song['aid']), int(song['sid']))
+        except:
+            # ads
+            continue
+        music = None
         if len(get_music(uuid=uuid)) == 0:
-            cover_fd = requests.get(song['picture'], stream=True).raw
-            audio_fd = requests.get(song['url'], stream=True).raw
+            try:
+                cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
+                audio_fd = requests.get(song['url'], stream=True, timeout=5).raw
+            except:
+                traceback.print_exc()
+                continue
             music = add_music(song['title'], song['artist'], song['albumtitle'],
-                    song['company'], song['public_time'], song['kbps'],
-                    cover_fd, audio_fd, uuid)
+                              song['company'], song['public_time'], song['kbps'],
+                              cover_fd, audio_fd, uuid)
+        else:
+            music = get_music(uuid=uuid)[0]
+        if music and music.key not in channel.music_list:
+            channel_music_list = channel.music_list
+            channel_music_list.append(music.key)
+            update_channel(channel, music_list=channel_music_list)
             update_music.append(music)
-            if music.key not in channel_music_list:
-                channel_music_list.append(music.key)
             if len(update_music) >= max_num:
                 break
-    update_channel(channel, music_list=channel_music_list)
     return update_music
 
 
 def update_music_by_channel(channel, num):
     '''update the music in channel, music count is num'''
     updated_music = []
+    retry = 0
     while num > 0:
         music_list = _update_channel_once(channel, num)
         updated_music.extend(music_list)
         num -= len(music_list)
+        if music_list == []:
+            retry += 1
+            if retry > 5:
+                break
     return updated_music

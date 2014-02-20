@@ -30,9 +30,9 @@ class test_channel_resource(BaseResourceTest):
         channel = add_channel('name1', 'uuid1')
         channel_key = channel.key
         rv = self.app.patch('/api/channel/%s/' % (channel_key),
-                data={'name': 'new_name',
-                    'update_num': 10,
-                    'playable': True})
+                            data={'name': 'new_name',
+                                  'update_num': 10,
+                                  'playable': True})
         rv = json.loads(rv.data)
         assert rv['name'] == 'new_name'
         assert rv['update_num'] == 10

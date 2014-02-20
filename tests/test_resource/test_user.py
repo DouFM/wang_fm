@@ -27,8 +27,8 @@ class test_user_list_resource(BaseResourceTest):
 
     def test_post(self):
         self.app.post('/api/user/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                      data={'name': 'name1',
+                            'password': 'pw1'})
         self.login_as_admin()
         rv = self.app.get('/api/user/?name=name1')
         rv = json.loads(rv.data)[0]
@@ -37,8 +37,8 @@ class test_user_list_resource(BaseResourceTest):
         assert rv['level'] == 'normal'
 
         rv = self.app.post('/api/user/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                           data={'name': 'name1',
+                                 'password': 'pw1'})
         rv = json.loads(rv.data)
         assert rv is None
 
@@ -49,8 +49,8 @@ class test_user_resource(BaseResourceTest):
         user = add_user('name1', 'pw1', 'normal')
         user_key = user.key
         rv = self.app.patch('/api/user/%s/' % (user_key),
-                data={'password': 'new_password',
-                    'level': 'admin'})
+                            data={'password': 'new_password',
+                                  'level': 'admin'})
         rv = json.loads(rv.data)
         assert rv['level'] == 'admin'
         user = get_user(key=user_key)[0]
@@ -73,8 +73,8 @@ class test_user_current_resource(BaseResourceTest):
 
         add_user('name1', 'pw1', 'normal')
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                           data={'name': 'name1',
+                                 'password': 'pw1'})
         rv = self.app.get('/api/user/current/')
         rv = json.loads(rv.data)
         assert rv['name'] == 'name1'
@@ -85,29 +85,29 @@ class test_user_current_resource(BaseResourceTest):
         add_user('name2', 'pw2', 'disable')
 
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                           data={'name': 'name1',
+                                 'password': 'pw1'})
         rv = json.loads(rv.data)
         assert rv['name'] == 'name1'
         assert rv['level'] == 'normal'
 
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name1',
-                    'password': 'unknown'})
+                           data={'name': 'name1',
+                                 'password': 'unknown'})
         rv = json.loads(rv.data)
         assert rv is None
 
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name2',
-                    'password': 'pw2'})
+                           data={'name': 'name2',
+                                 'password': 'pw2'})
         rv = json.loads(rv.data)
         assert rv is None
 
     def test_delete(self):
         add_user('name1', 'pw1', 'normal')
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                           data={'name': 'name1',
+                                 'password': 'pw1'})
         rv = self.app.delete('/api/user/current/')
         rv = self.app.get('/api/user/current/')
         rv = json.loads(rv.data)
@@ -124,15 +124,15 @@ class test_user_current_history_resource(BaseResourceTest):
     def test_post(self):
         self.login_as_admin()   # this will add a user name admin!
         music1 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid1')
+                           '2013', '64', self.cover, self.audio, 'uuid1')
         self.cover.seek(0)
         self.audio.seek(0)
         music2 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid2')
+                           '2013', '64', self.cover, self.audio, 'uuid2')
         self.app.post('/api/user/current/history/',
-                data={'op': 'favor', 'key': music1.key})
+                      data={'op': 'favor', 'key': music1.key})
         self.app.post('/api/user/current/history/',
-                data={'op': 'dislike', 'key': music2.key})
+                      data={'op': 'dislike', 'key': music2.key})
         rv = self.app.get('/api/user/current/history/?start=0&end=10')
         rv = json.loads(rv.data)
         assert len(rv) == 2
@@ -142,15 +142,15 @@ class test_user_current_favor_resource(BaseResourceTest):
     def test_get(self):
         self.login_as_admin()   # this will add a user name admin!
         music1 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid1')
+                           '2013', '64', self.cover, self.audio, 'uuid1')
         self.cover.seek(0)
         self.audio.seek(0)
         music2 = add_music('title', 'artist', 'album', 'company',
-                '2013', '64', self.cover, self.audio, 'uuid2')
+                           '2013', '64', self.cover, self.audio, 'uuid2')
         self.app.post('/api/user/current/history/',
-                data={'op': 'favor', 'key': music1.key})
+                      data={'op': 'favor', 'key': music1.key})
         self.app.post('/api/user/current/history/',
-                data={'op': 'favor', 'key': music2.key})
+                      data={'op': 'favor', 'key': music2.key})
         rv = self.app.get('/api/user/current/favor/?start=0&end=10')
         rv = json.loads(rv.data)
         # print rv

@@ -30,6 +30,9 @@ nosetests.xml
 # Translations
 *.mo
 
+# pycharm
+.idea
+
 # Mr Developer
 .mr.developer.cfg
 .project

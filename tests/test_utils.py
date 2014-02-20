@@ -33,12 +33,14 @@ class test_auth(BaseResourceTest):
     def setup(self):
         super(test_auth, self).setup()
         import fm
+
         fm.app.config['TESTING'] = False
 
     def test_authenticated(self):
         add_user('name1', 'pw1', 'normal')
         add_user('name2', 'pw2', 'disable')
         import fm
+
         self.api = Api(fm.app)
         self.api.add_resource(AuthResource, '/test/api/auth/')
 
@@ -46,8 +48,8 @@ class test_auth(BaseResourceTest):
         rv = json.loads(rv.data)
         assert rv['status'] == 403
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name1',
-                    'password': 'pw1'})
+                           data={'name': 'name1',
+                                 'password': 'pw1'})
         rv = self.app.get('/test/api/auth/')
         rv = json.loads(rv.data)
         assert rv is True
@@ -57,8 +59,8 @@ class test_auth(BaseResourceTest):
 
         rv = self.app.delete('/api/user/current/')
         rv = self.app.post('/api/user/current/',
-                data={'name': 'name2',
-                    'password': 'pw2'})
+                           data={'name': 'name2',
+                                 'password': 'pw2'})
         rv = self.app.get('/test/api/auth/')
         rv = json.loads(rv.data)
         assert rv['status'] == 403

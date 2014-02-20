@@ -12,7 +12,6 @@ from config import SECRET_KEY
 app = Flask(__name__)
 api = Api(app)
 
-
 api.add_resource(FileResource, '/api/fs/<string:key>/')
 
 api.add_resource(MusicListResource, '/api/music/')

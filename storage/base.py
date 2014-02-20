@@ -5,6 +5,7 @@ import mongoengine
 
 class BaseMongoStorage(object):
     '''adapter for MongoDB'''
+
     def save(self):
         '''save obj to db'''
         mongoengine.Document.save(self)
@@ -31,9 +32,7 @@ class BaseMongoStorage(object):
         key = kwargs.pop('key', None)
         if key:
             kwargs['pk'] = key
-        # TODO
-        # BAD query about start & end
-        return [obj for obj in cls.objects(**kwargs)][start:end]
+        return [obj for obj in cls.objects(**kwargs)[start:end]]
 
     @classmethod
     def status(cls):
