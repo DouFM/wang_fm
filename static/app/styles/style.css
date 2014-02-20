@@ -1,0 +1,246 @@
+/* CSS Document */
+
+body{
+	background:#fff; 
+	color:#0F0F0F; 
+	font:15px/20px Arial, Helvetica, sans-serif; 
+	margin:32px 0 0; padding:0;
+}
+div, ul, h1, h2, h3, li, p, img{margin:0; padding:0;}
+ul{list-style-type:none;}
+
+/* TOP PANEL*/
+#topPanel{
+	width:900px; 
+	height:93px; 
+	position:relative; 
+	margin:0 auto; 
+	padding:0;
+	border: 0px solid red;
+}
+#topPanel img{
+	width:230px; 
+	height:80px; 
+	z-index:1; 
+	padding:0; 
+	position:absolute; 
+	margin:0 0 0 21px;
+}
+
+/* MENU PANEL*/
+#topPanel ul{
+	display:block; 
+	width:732px; 
+	height:36px; 
+	position:absolute; 
+	top:0; 
+	right:0; 
+	margin:11px 0 0; 
+	padding:0 20px 0 0; 
+	border-bottom:1px solid #AEAEAE;
+}
+
+#topPanel ul li{
+	float:right; 
+	font:12px/36px "Trebuchet MS",Arial, Helvetica, sans-serif; 
+	font-weight:bold;
+}
+
+#topPanel ul li a{
+	border-bottom:1px solid #AEAEAE;
+	width:74px; 
+	height:36px; 
+	display:block; 
+	padding:0; 
+	color:#555; 
+	background:#fff; 
+	text-decoration:none; 
+	text-align:center; 
+	margin:0 1px 1px 0; 
+	top:0px; 
+	left:0px;
+}
+.navLink{
+	border-bottom:1px solid #AEAEAE;
+	width:74px; 
+	height:36px; 
+	color:#555; 
+	background:#fff; 
+	text-decoration:none; 
+	text-align:center; 
+	margin:0 1px 1px 0; 
+	top:0px; 
+	left:0px;
+}
+#topPanel ul li a:hover{
+	width:74px; 
+	height:36px; 
+	text-decoration:none; 
+	background:url(../images/button.gif) no-repeat 0 0 #AEAEAE; 
+	color:#fff;
+}
+
+/* BODY PANEL*/
+#bodyPanel{
+	width:900px; 
+	height:670px; 
+	position:relative; 
+	margin:10px auto; 
+	padding:0;
+	border: 0px solid red;
+}
+/*music channels*/
+#musicChannel {
+	float: left;
+	width: 370px;
+	height:630px;
+	padding: 10px 0;
+	border: 1px solid #eee;
+
+}
+
+
+/*music player*/
+#musicPanel {
+	float: right;
+	padding: 10px;
+	width: 520px;
+	height:630px;
+	border: 2px solid #eee;
+	background-color: #fff;
+	-webkit-border-radius: 1em;
+    -moz-border-radius: 1em 1em 1em 1em;
+    border-radius: 1em 1em 1em 1em;
+}
+
+#recentTenSongs {
+	margin: 10px;
+	margin-left:20px;
+}
+
+#recentTenSongs table td{
+	float: left;
+/*	border: 1px solid #eee;*/
+	width: 90px;
+	height: 90px;
+}
+
+#recentTenSongs table td img {
+	width: 80px;
+	height: 80px;
+	-moz-box-shadow: 5px 5px 6px #eee;
+    -webkit-box-shadow: 5px 5px 6px #eee;
+    box-shadow: 5px 5px 6px #eee;
+}
+
+#bodyPanel h3{ 
+	margin:12px 0 12px 0; 
+	font:30px/30px Georgia, "Times New Roman", Times, serif; 
+	font-weight:normal; 
+	padding:0 0 0 20px; 
+	/*color:#FF7113;*/
+}
+
+#bodyPanel #about { 
+	border: 1px solid #eee; 
+	margin: 10px;
+}
+
+#bodyPanel #testimonial{
+	height:142px; 
+	display:block; 
+	background:url(../images/testimonial-bg.gif) 0 0 no-repeat #FFF6DB; 
+	padding:32px 33px 0 148px; 
+	margin: 5px; 
+	color:#786321;
+}
+
+#bodyPanel #testimonial p{
+	background:none; 
+	margin:0; 
+	padding:0 0 5px 0;
+}
+
+#bodyPanel #testimonial p span{
+	color:#000 !Important; 
+	background:#FFFAED !Important;
+}
+#bodyPanel p.moretwo{
+	height:26px; 
+	padding:0; 
+	background:none; 
+	margin:0;
+}
+#bodyPanel p.moretwo a{
+	width:76px; 
+	height:26px; 
+	display:block; 
+	margin:0px 0px 0px 196px; 
+	background:url(../images/more2.gif) 0 0 no-repeat #FFF5D6; 
+	color:#555; 
+	text-decoration:none; 
+	font:15px/26px "Trebuchet MS",Arial, Helvetica, sans-serif; 
+	text-transform:uppercase; 
+	padding:0 0 0 10px; 
+	top:0px; 
+	right:0px;
+}
+#bodyPanel p.moretwo a:hover{
+	background:url(../images/more2.gif) 0 0 no-repeat #FFF5D6; 
+	color:#216EBD; 
+	text-decoration:none;
+}
+
+/* FOOTER PANEL*/
+#footerPanel{
+	width:100%;  
+	background:#DCDCDC; 
+	color:#4C4C4C; 
+	font-size:12px;}
+#footerbodyPanel{
+	width:762px;
+	height:133px; 
+	position:relative; 
+	margin:0 auto; 
+	padding:0;
+}
+#footerPanel ul{
+	width:320px; 
+	display:block; 
+	position:absolute; 
+	right:10px; 
+	top:33px; 
+}
+#footerPanel li{
+	float:left; 
+	font:12px/15px Arial, Helvetica, sans-serif; 
+	font-weight:normal;
+}
+#footerPanel ul li a{
+	padding:0 6px; 
+	color:#4C4C4C; 
+	background:#DCDCDC; 
+	text-decoration:none;
+}
+#footerPanel ul li a:hover{
+	text-decoration:underline;
+}
+#footerPanel ul li a.padl{
+	padding:0 0 0 6px;
+}
+#footerPanel p.copyright{
+	background:#DCDCDC; 
+	display:block; 
+	position:absolute; 
+	top:54px; 
+	right:45px; 
+	color:#A64200;
+}
+
+.clear {clear: both;}
+
+.divideline {
+	height: 5px;
+	background-color: #eee;
+	margin: 10px;
+}

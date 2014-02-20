@@ -35,4 +35,4 @@ from flask import render_template
 
 @app.route('/')
 def index():
-    return render_template("demo.html")
+    return render_template("/static/html/index.html")

@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html ng-app="FMApp">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>dou FM</title>
+	<!-- <link href="../styles/bootstrap-combined.min.css" rel="stylesheet" type="text/css" /> -->
+	<link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../vender/jPlayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+	<link href="../styles/style.css" rel="stylesheet" type="text/css" />
+	<link href="../styles/music-player.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="../vender/jquery.min.js"></script>
+	<script type="text/javascript" src="../vender/angularJS/angular.js"></script>
+	<script type="text/javascript" src="../vender/angularJS/angular-route.js"></script>
+	<script type="text/javascript" src="../vender/angularJS/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="../vender/angularJS/angular-resource.min.js"></script>
+	<script type="text/javascript" src="../scripts/app.js"></script>
+	<script type="text/javascript" src="../scripts/controllers.js"></script>
+	<script type="text/javascript" src="../scripts/services.js"></script>
+	<script type="text/javascript" src="../vender/bootstrap.min.js"></script>
+	<!-- // <script type="text/javascript" src="../vender/bootstrap-paginator.js"></script> -->
+	<script type="text/javascript" src="../vender/jPlayer/js/jquery.jplayer.js"></script>
+	<script type="text/javascript" src="../vender/jPlayer/js/jplayer.playlist.min.js"></script>
+</head>
+<body>
+	<!---topPanel-->
+	<div id="topPanel" ng-controller="NavigatorCtrl">
+		<ul id="navBar"></ul>
+		<!-- <navigator></navigator> -->
+		<a href="#"><img src="../images/logo.gif" title="Trial Services" alt="Trial Services" width="230" height="80" border="0" /></a>
+		<!--  login window -->
+		<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">用户登录</h4>
+		      </div>
+		      <div class="modal-body" style="text-align: center;">
+		        <form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label">用户名</label>
+				    <div class="col-sm-6">
+				      <input type="email" class="form-control" id="inputEmail3" placeholder="请输入用户名">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+				    <div class="col-sm-6">
+				      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
+				    </div>
+				  </div>
+				</form>
+		      </div>
+		      <div class="modal-footer" style="text-align: center;">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" ng-click="login()">登录</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</div>
+    <!--  register window -->
+    <div id="register" align="middle" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center">
+       	<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3>用户注册</h3>              
+        </div>
+        <div class="modal-body">                   
+        	<div class="control-group">
+                <label class="control-label" for="reg_name">用户名</label>
+                <div class="controls">
+                    <input type="text" id="reg_name" name="user_name" maxlength="50"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="reg_password">密码</label>
+                <div class="controls">
+                    <input type="password" id="reg_password" name="reg_password" maxlength="40"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="repeat_password">再次输入密码</label>
+                <div class="controls">
+                    <input type="password" id="repeat_password" name="repeat_password" maxlength="40"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn btn-success" type="button" value="返回" onclick="location.href='/';">
+                    <button class="btn btn-primary" onClick="register()">注册</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- register window end -->  
+	<!---topPanel end-->
+
+	<!---bodyPanel-->
+	<div id="bodyPanel" ng-view></div>
+	<!---bodyPanel end-->
+
+	<!---footPanel-->
+	<div id="footerPanel">
+	  	<div id="footerbodyPanel">
+		  	<ul>
+			  	<li><a href="#">Home </a>| </li>
+			  	<li><a href="#">About us</a> | </li>
+			  	<li><a href="#">Support </a>| </li>
+				<li><a href="#">Clients</a> | </li>
+				<li><a href="#">Contact </a> </li>
+		  	</ul>
+		  	<p class="copyright">© trial services all right reaserved</p>
+	  	</div>
+	</div><!---footPanel end-->
+</body>
+</html>
