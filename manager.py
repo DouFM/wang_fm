@@ -2,7 +2,9 @@
 #coding:utf8
 import random
 import datetime
+
 from apscheduler.scheduler import Scheduler
+from gevent.wsgi import WSGIServer
 
 from flask.ext.script import Manager
 from fm import app
@@ -12,7 +14,13 @@ from model.channel import get_channel, update_channel
 from tasks.spider_task import douban_spider_task
 from config import ADMIN_NAME, ADMIN_PASSWORD
 
+
 manager = Manager(app)
+
+@manager.command
+def runserver_gevent():
+    http_server = WSGIServer(('', 8888), app)
+    http_server.serve_forever()
 
 
 @manager.command
