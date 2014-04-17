@@ -9,11 +9,11 @@ fmApp.factory('User', ['$resource',
 			{
 				query: {method: 'get', isArray: true},
 			 	login: {method: 'post', isArray: false}
+			 	// register: {method: 'post', isArray: false}
 			}
 		);
 	}
 ]);
-
 
 /*
 *	music services
@@ -27,6 +27,17 @@ fmApp.factory('Music', ['$resource',
 	}
 ]);
 
+/*
+*	music services
+*/
+fmApp.factory('MusicList', ['$resource', 
+	function($resource) {
+		return $resource('/api/playlist/:arg', 
+			{arg: '@arg'},
+			{query: {method: 'get', isArray: true }
+		});
+	}
+]);
 
 /*
 *	channel services

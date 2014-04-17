@@ -1,54 +1,73 @@
-
 <!DOCTYPE html>
-<html ng-app="FMApp">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>dou FM</title>
-	<!-- <link href="../styles/bootstrap-combined.min.css" rel="stylesheet" type="text/css" /> -->
-	<link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="../vender/jPlayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
-	<link href="../styles/style.css" rel="stylesheet" type="text/css" />
-	<link href="../styles/music-player.css" rel="stylesheet" type="text/css" />
+<html lang="en" ng-app="FMApp">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Dou FM</title>	
 
-	<script type="text/javascript" src="../vender/jquery.min.js"></script>
-	<script type="text/javascript" src="../vender/angularJS/angular.js"></script>
-	<script type="text/javascript" src="../vender/angularJS/angular-route.js"></script>
-	<script type="text/javascript" src="../vender/angularJS/angular-cookies.min.js"></script>
-	<script type="text/javascript" src="../vender/angularJS/angular-resource.min.js"></script>
-	<script type="text/javascript" src="../scripts/app.js"></script>
-	<script type="text/javascript" src="../scripts/controllers.js"></script>
-	<script type="text/javascript" src="../scripts/services.js"></script>
-	<script type="text/javascript" src="../vender/bootstrap.min.js"></script>
-	<!-- // <script type="text/javascript" src="../vender/bootstrap-paginator.js"></script> -->
-	<script type="text/javascript" src="../vender/jPlayer/js/jquery.jplayer.js"></script>
-	<script type="text/javascript" src="../vender/jPlayer/js/jplayer.playlist.min.js"></script>
-</head>
-<body>
-	<!---topPanel-->
-	<div id="topPanel" ng-controller="NavigatorCtrl">
-		<ul id="navBar"></ul>
-		<!-- <navigator></navigator> -->
-		<a href="#"><img src="../images/logo.gif" title="Trial Services" alt="Trial Services" width="230" height="80" border="0" /></a>
+		<!---bootstrap-->
+		<link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<!---bootstrap end-->
+
+		<!---my css-->
+		<link href="../styles/style.css" rel="stylesheet" type="text/css" />
+		<link href="../styles/music-player.css" rel="stylesheet" type="text/css" />
+		<!---my css end-->
+		
+		<!---GoogleNexus-->
+		<link rel="stylesheet" type="text/css" href="../vender/GoogleNexus/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="../vender/GoogleNexus/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="../vender/GoogleNexus/css/component.css" />
+		<!---GoogleNexus end-->
+
+		<!---jplayer-->
+		<link href="../vender/jPlayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+		<!---jplayer end-->
+
+		
+	</head>
+	<body ng-controller="FMCtrl">
+		<!-- nav bar -->
+		<nav>
+			<ul id="gn-menu" class="gn-menu-main">
+				<li class="gn-trigger">
+					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+					<nav class="gn-menu-wrapper">
+						<div class="gn-scroller">
+							<ul class="gn-menu">
+								<li ng-repeat="list in lists"><a class="gn-icon gn-icon-earth" ng-click="playthis('{{ list.key }}')">{{ list.name }}</a></li>
+							</ul>
+						</div><!-- /gn-scroller -->
+					</nav>
+				</li>
+				<!-- 登录 -->
+	 			<!-- <li id="loginBar"><a href="#" data-target="#login" data-toggle="modal">登录</a></li> -->
+				<!-- 注册	 -->
+        		<!-- <li id="regBar"><a href="#" data-target="#register" data-toggle="modal">注册</a></li> -->
+	    		<li style="border:0;"></li>
+			</ul>
+		</nav>
+		<!-- nav bar end-->
 		<!--  login window -->
-		<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px;">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">用户登录</h4>
+		        <h4 class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户登录</h4>
 		      </div>
 		      <div class="modal-body" style="text-align: center;">
 		        <form class="form-horizontal" role="form">
 				  <div class="form-group">
-				    <label for="inputEmail3" class="col-sm-3 control-label">用户名</label>
+				    <label for="login_name" class="col-sm-3 control-label">用户名</label>
 				    <div class="col-sm-6">
-				      <input type="email" class="form-control" id="inputEmail3" placeholder="请输入用户名">
+				      <input type="email" class="form-control" id="login_name" placeholder="请输入用户名">
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+				    <label for="login_password" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
 				    <div class="col-sm-6">
-				      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
+				      <input type="password" class="form-control" id="login_password" placeholder="请输入密码">
 				    </div>
 				  </div>
 				</form>
@@ -60,57 +79,167 @@
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-	</div>
-    <!--  register window -->
-    <div id="register" align="middle" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center">
-       	<div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3>用户注册</h3>              
-        </div>
-        <div class="modal-body">                   
-        	<div class="control-group">
-                <label class="control-label" for="reg_name">用户名</label>
-                <div class="controls">
-                    <input type="text" id="reg_name" name="user_name" maxlength="50"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="reg_password">密码</label>
-                <div class="controls">
-                    <input type="password" id="reg_password" name="reg_password" maxlength="40"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="repeat_password">再次输入密码</label>
-                <div class="controls">
-                    <input type="password" id="repeat_password" name="repeat_password" maxlength="40"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <input class="btn btn btn-success" type="button" value="返回" onclick="location.href='/';">
-                    <button class="btn btn-primary" onClick="register()">注册</button>
-                </div>
-            </div>
-        </div>
-    </div><!-- register window end -->  
-	<!---topPanel end-->
 
-	<!---bodyPanel-->
-	<div id="bodyPanel" ng-view></div>
-	<!---bodyPanel end-->
+		<!--  register window -->
+		<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px;">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户注册</h4>
+		      </div>
+		      <div class="modal-body" style="text-align: center;">
+		        <form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="username" class="col-sm-3 control-label">用户名</label>
+				    <div class="col-sm-6">
+				      <input type="email" class="form-control" id="username" placeholder="请输入用户名">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="password" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+				    <div class="col-sm-6">
+				      <input type="password" class="form-control" id="password" placeholder="请输入密码">
+				    </div>
+				  </div>
+				   <div class="form-group">
+				    <label for="password2" class="col-sm-3 control-label">确认密码</label>
+				    <div class="col-sm-6">
+				      <input type="password" class="form-control" id="password2" placeholder="请确认密码">
+				    </div>
+				  </div>
+				</form>
+		      </div>
+		      <div class="modal-footer" style="text-align: center;">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" ng-click="reg()">注册</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+    	<!--  register window -->
 
-	<!---footPanel-->
-	<div id="footerPanel">
-	  	<div id="footerbodyPanel">
-		  	<ul>
-			  	<li><a href="#">Home </a>| </li>
-			  	<li><a href="#">About us</a> | </li>
-			  	<li><a href="#">Support </a>| </li>
-				<li><a href="#">Clients</a> | </li>
-				<li><a href="#">Contact </a> </li>
-		  	</ul>
-		  	<p class="copyright">© trial services all right reaserved</p>
-	  	</div>
-	</div><!---footPanel end-->
-</body>
+		<section id="content">
+			<header>
+				<h1>Dou音乐, 爱生活</h1>
+			</header>
+			<article>
+				<p>这是一个部署在校内的音乐服务器</p>
+		    	<p>在这里听歌是不计外网流量的~</p>
+				<p><a href="#">关于DouFM，关于我们</a></p>
+				</br>
+				<p>建议使用 Chrome 浏览器以获得最佳用户体验</p>
+				<span>Powered By <a href="#">miao_fm</a></span></br>
+				<span>意见或建议：<a href="#">admin@doufm.info</span></span>
+			</arttcle>
+		</section>
+
+		<section id="musicPanel">
+			<!---musicPanel-->
+					<div id="jquery_jplayer_1" class="jp-jplayer"></div>        
+			    	<div id="jp_container_1"> 
+				    	<div id="jp-cover"><img/></div>
+	            		<div class="jp-audio">
+			            	<div id="jp-report"></div>
+
+			            	<!--  report window -->
+					        <div id="myModal" align="middle" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center">
+				            <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                <h3 id="myModalLabel">报告信息</h3>
+				            </div>
+				            <div class="modal-body">
+			                <div id="reportInfo"></div>
+				            </div>
+				            <div class="modal-footer">
+			                <button class="btn btn-primary" data-dismiss="modal" onClick="submitReport()" aria-hidden="true">报告错误</button>
+			                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				            </div>
+					        </div>
+			            	<!-- report window end -->
+
+			            	<div id="jp-singer"></div>   
+			            	<div id="jp-nameAlbum"></div>
+
+			            	<div class="jp-type-playlist">
+		                		<div class="jp-gui jp-interface">
+			                		<ul class="jp-controls">
+					                    <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+					                    <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+				                    	<li><a href="javascript:;" class="jp-next" tabindex="1" id="jp-next" ng-click="clickNext()">next</a></li>
+					                    <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+					                    <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+					                    <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+				                  	</ul>
+			                		<div class="jp-progress">
+		                    			<div class="jp-seek-bar">
+		                     				<div class="jp-play-bar"></div>
+		                    			</div>
+			                		</div>
+			                		<div class="jp-volume-bar">
+		                    			<div class="jp-volume-bar-value"></div>
+			                		</div>
+					                <div class="jp-time-holder">
+					                  	<div class="jp-current-time"></div>
+				                    	<div class="jp-duration"></div>
+			                		</div>
+
+				                    <ul class="jp-toggles" style="visibility:hidden">
+				                      	<li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
+				                      	<li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
+				                      	<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+				                      	<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+				                    </ul>
+				                </div>
+				            </div>
+				    	</div>    
+				    </div>
+					<div class="clear"></div>
+
+					<div id="recentTenSongs">
+						<ul class="thumb">
+							<li><a href="#" ng-click="clickPlay(0)"><img ng-src="{{ musics[0].cover }}" alt="{{musics[0].album}}- {{musics[0].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(1)"><img ng-src="{{ musics[1].cover }}" alt="{{musics[1].album}}- {{musics[1].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(2)"><img ng-src="{{ musics[2].cover }}" alt="{{musics[2].album}}- {{musics[2].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(3)"><img ng-src="{{ musics[3].cover }}" alt="{{musics[3].album}}- {{musics[3].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(4)"><img ng-src="{{ musics[4].cover }}" alt="{{musics[4].album}}- {{musics[4].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(5)"><img ng-src="{{ musics[5].cover }}" alt="{{musics[5].album}}- {{musics[5].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(6)"><img ng-src="{{ musics[6].cover }}" alt="{{musics[6].album}}- {{musics[6].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(7)"><img ng-src="{{ musics[7].cover }}" alt="{{musics[7].album}}- {{musics[7].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(8)"><img ng-src="{{ musics[8].cover }}" alt="{{musics[8].album}}- {{musics[8].artist}}" /></a></li>
+							<li><a href="#" ng-click="clickPlay(9)"><img ng-src="{{ musics[9].cover }}" alt="{{musics[9].album}}-{{musics[9].artist}}" /></a></li>
+						</ul>
+					</div>
+				<!---musicPanel end-->
+		</section>
+
+		<script src="../vender/GoogleNexus/js/modernizr.custom.js"></script>
+		<script src="../vender/GoogleNexus/js/classie.js"></script>
+		<script src="../vender/GoogleNexus/js/gnmenu.js"></script>	
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+		<!---JS-->
+		<script type="text/javascript" src="../vender/jquery.min.js"></script>
+		<script type="text/javascript" src="../vender/zoomer.js"></script>
+
+		<!---angularJS -->
+		<script type="text/javascript" src="../vender/angularJS/angular.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-route.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-resource.min.js"></script>
+		<!---angularJS -->
+
+		<!---my JS -->
+		<script type="text/javascript" src="../scripts/controllers.js"></script>
+		<script type="text/javascript" src="../scripts/services.js"></script>
+		<!---my JS -->
+
+		<script type="text/javascript" src="../vender/jPlayer/js/jquery.jplayer.js"></script>
+		<script type="text/javascript" src="../vender/jPlayer/js/jplayer.playlist.min.js"></script>
+		<script type="text/javascript" src="../vender/bootstrap.min.js"></script>
+		<!---JS-->
+	<!-- </script> -->
+	</body>
 </html>
+

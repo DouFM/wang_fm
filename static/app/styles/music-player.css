@@ -8,12 +8,9 @@
 	height: 149px;
 	margin-top: 0px;
 	padding-top: 0px;
-	-moz-box-shadow: 3px 3px 3px #333;
-    -webkit-box-shadow: 3px 3px 3px #333;
-    box-shadow: 3px 3px 3px #333;
-	-webkit-border-radius: 0.5em;
-    -moz-border-radius: 1em 0em 0em 1em;
-    border-radius: 1em 0em 0em 1em;
+	-moz-box-shadow: 3px 3px 3px #34495e;
+    -webkit-box-shadow: 3px 3px 3px #34495e;
+    box-shadow: 3px 3px 3px #34495e;
 }
 
 #jp_container_1 {
@@ -31,11 +28,9 @@
 	color: #666;
 	height: 20px;
 	padding: 0px;
-	margin-top: 10px;
-	margin-left:15px;
-	margin-right:50px;
-	border:0px solid red;
+	margin: 10px 50px 0 15px;
 }
+
 #jp-name {
 	font-size:16px; 
 	font-family:Verdana, Arial, sans-serif;
@@ -86,3 +81,4 @@
 	border:0px solid red;
 }
 #jp-favorite img {width:25px; height: 25px;}
+

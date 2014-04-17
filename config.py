@@ -1,5 +1,6 @@
 # mongodb settings
 DB_HOST = 'localhost'
+# DB_HOST = '192.168.5.130'
 DB_PORT = 27017
 DB_NAME = 'wang_fm'
 TEST_DB_NAME = 'test_wang_fm'
