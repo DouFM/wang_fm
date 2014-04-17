@@ -136,8 +136,8 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
         // console.info(musicArr);
         $("#jquery_jplayer_1").jPlayer("setMedia", { mp3: musicArr.audio }).jPlayer("load").jPlayer("play");
         $("#jp-cover img").attr("src",musicArr.cover);
-        $("#jp-singer").text(musicArr.artist);
-        $("#jp-nameAlbum").text(musicArr.title + "   " + musicArr.album);
+        $("#jp-singer").html(musicArr.artist);
+        $("#nameAlbum").html(musicArr.title + '     ' + musicArr.album);
     }
 
     //click next button in the music player
