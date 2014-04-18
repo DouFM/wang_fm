@@ -92,11 +92,11 @@ def disable_channel(uuid):
 
 
 @manager.command
-def tasks(hour):
+def tasks(interval):
     '''run tasks, keep it running for spider'''
     sched = Scheduler(standalone=True)
     # http://pythonhosted.org/APScheduler/modules/scheduler.html
-    sched.add_cron_job(douban_spider_task, hour=int(hour))
+    sched.add_cron_job(douban_spider_task, hour=int(interval))
     sched.start()
 
 
