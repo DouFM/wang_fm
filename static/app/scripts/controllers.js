@@ -89,6 +89,7 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
 
     //music player 
     $scope.index = 0;
+    $scope.key = "52f8ca1d1d41c851663fcba7";
     function playerInit() {
         new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_1",
@@ -104,7 +105,6 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             smoothPlayBar: true,
             keyEnabled: true
         });
-
         // $("#jp-report").html('<a href="#" data-toggle="tooltip" data-placement="top" title="请注册后使用!" alt="report" ><img src="../images/report.png"></img></a>');
     }
 
@@ -112,7 +112,8 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
         // console.info(" playReady ok");
         MusicList.query(function(data) {
             // console.info(data);
-            $scope.musics = MusicList.query({arg: data[0].key, num: 10}, function(data) {
+            // $scope.key = data[0].key;
+            $scope.musics = MusicList.query({arg: $scope.key, num: 10}, function(data) {
                 // console.info(data[1]);
                 playMusic(data[$scope.index]);
             });
@@ -163,9 +164,10 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
     //list for all users 
     $scope.lists = MusicList.query({start: 0});;
     $scope.playthis = function(key) {
-        var listKey = key;
+        // var listKey = key;
+        $scope.key = key;
         $scope.index = 0;
-        $scope.musics = MusicList.query({arg: key, num: 10}, function(data) {
+        $scope.musics = MusicList.query({arg: $scope.key, num: 10}, function(data) {
             playMusic(data[0]);
         });
     }

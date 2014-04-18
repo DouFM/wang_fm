@@ -12,6 +12,9 @@ from config import SECRET_KEY
 app = Flask(__name__)
 api = Api(app)
 
+app.jinja_env.variable_start_string = '[['
+app.jinja_env.variable_end_string = ']]'
+
 api.add_resource(FileResource, '/api/fs/<string:key>/')
 
 api.add_resource(MusicListResource, '/api/music/')
@@ -34,4 +37,4 @@ from flask import render_template
 
 @app.route('/')
 def index():
-    return render_template("/static/html/index.html")
+    return render_template("index.html")
