@@ -90,6 +90,7 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
     //music player 
     $scope.index = 0;
     $scope.key = "52f8ca1d1d41c851663fcba7";
+    $scope.current_channel = '华语';
     function playerInit() {
         new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_1",
@@ -162,10 +163,11 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
     }
 
     //list for all users 
-    $scope.lists = MusicList.query({start: 0});;
-    $scope.playthis = function(key) {
+    $scope.lists = MusicList.query({start: 0});
+    $scope.playthis = function(key, name) {
         // var listKey = key;
         $scope.key = key;
+        $scope.current_channel = name;
         $scope.index = 0;
         $scope.musics = MusicList.query({arg: $scope.key, num: 10}, function(data) {
             playMusic(data[0]);

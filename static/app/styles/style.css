@@ -2,6 +2,19 @@
  * index css 
 */
 
+/*nav*/
+#current_channel {
+	padding: 0 5px;
+	border: 0;
+}
+#current_channel img{
+	width:30px;height:25px;
+	padding-right:5px; 
+}
+#current_channel span{
+	color:#34495e;
+}
+
 #loginBar, #regBar, #mBar {
 	width: 100px;
 	padding: 0px;
@@ -94,3 +107,4 @@ ul.thumb li img.hover {margin: 0px;border: none;}
 	color: #000;
 	background-color: #eee;
 }
+

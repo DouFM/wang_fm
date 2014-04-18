@@ -33,11 +33,13 @@
 					<nav class="gn-menu-wrapper">
 						<div class="gn-scroller">
 							<ul class="gn-menu">
-								<li ng-repeat="list in lists"><a class="gn-icon gn-icon-earth" ng-click="playthis('{{ list.key }}')">{{ list.name }}</a></li>
+								<li ng-repeat="list in lists"><a class="gn-icon gn-icon-earth" ng-click="playthis('{{ list.key }}', '{{ list.name}}')">{{ list.name }}</a></li>
 							</ul>
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
+				<!-- current channel -->
+	 			<li id="current_channel"><img src="/static/app/images/channel_icon.gif"/><span><small>{{ current_channel }}</span></li>
 				<!-- 登录 -->
 	 			<!-- <li id="loginBar"><a href="#" data-target="#login" data-toggle="modal">登录</a></li> -->
 				<!-- 注册	 -->
