@@ -2,6 +2,10 @@
  * index css 
 */
 
+body {
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
+}
+
 /*nav*/
 #current_channel {
 	padding: 0 5px;
@@ -32,6 +36,7 @@
 	padding: 200px 0 0 140px;
 }
 
+#content h1, p, span {	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu}
 #content a{
 	text-decoration: none;
 }

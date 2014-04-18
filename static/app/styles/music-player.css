@@ -24,7 +24,7 @@
 
 #jp-singer {
 	font-size:18px; 
-	font-family:sans-serif,Verdana, Arial;
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu
 	color: #666;
 	height: 20px;
 	padding: 0px;
@@ -33,14 +33,14 @@
 
 #jp-name {
 	font-size:16px; 
-	font-family:Verdana, Arial, sans-serif;
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu
 	color: #009be3;
 	padding: 0px;
 	margin-left:1px;
 }
 #jp-album {
 	font-size:14px; 
-	font-family:Verdana, Arial, sans-serif;
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu
 	color: #666;
 	padding: 0px;
 	margin-left:5px;
