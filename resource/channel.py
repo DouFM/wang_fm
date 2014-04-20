@@ -11,13 +11,13 @@ class ChannelQueryArgs(BaseArgs):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
         self.parser.add_argument('key', type=str)
-        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('playable', type=bool)
 
 
 class ChannelPatchArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('update_num', type=int)
         self.parser.add_argument('playable', type=bool)
 

@@ -11,21 +11,21 @@ class MusicQueryArgs(BaseArgs):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
         self.parser.add_argument('key', type=str)
-        self.parser.add_argument('title', type=str)
-        self.parser.add_argument('artist', type=str)
-        self.parser.add_argument('album', type=str)
-        self.parser.add_argument('company', type=str)
-        self.parser.add_argument('public_time', type=str)
-        self.parser.add_argument('kbps', type=str)
+        self.parser.add_argument('title', type=unicode)
+        self.parser.add_argument('artist', type=unicode)
+        self.parser.add_argument('album', type=unicode)
+        self.parser.add_argument('company', type=unicode)
+        self.parser.add_argument('public_time', type=unicode)
+        self.parser.add_argument('kbps', type=unicode)
 
 
 class MusicPatchArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('title', type=str)
-        self.parser.add_argument('artist', type=str)
-        self.parser.add_argument('album', type=str)
-        self.parser.add_argument('company', type=str)
-        self.parser.add_argument('public_time', type=str)
+        self.parser.add_argument('title', type=unicode)
+        self.parser.add_argument('artist', type=unicode)
+        self.parser.add_argument('album', type=unicode)
+        self.parser.add_argument('company', type=unicode)
+        self.parser.add_argument('public_time', type=unicode)
 
 
 music_status_fields = {

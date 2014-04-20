@@ -12,13 +12,13 @@ class UserQueryArgs(BaseArgs):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
         self.parser.add_argument('key', type=str)
-        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('level', type=str, choices=('disable', 'nromal', 'admin'))
 
 
 class UserRegArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('password', type=str)
 
 
@@ -30,7 +30,7 @@ class UserPatchArgs(BaseArgs):
 
 class UserLoginArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('password', type=str)
 
 
