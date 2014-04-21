@@ -15,10 +15,7 @@ function FMCtrl($scope, $http, MusicList, Music) {
     //music player 
     $scope.index = 0;
     //locale key
-    $scope.key = "52cac08c1d41c80eaec94c09";
-    //doufm key
-    // $scope.key = "52f8ca1d1d41c851663fcba7";
-    $scope.current_channel = '华语';
+    
     
     function playerInit(playReady, playEnded) {
         new jPlayerPlaylist({
@@ -132,7 +129,12 @@ function FMCtrl($scope, $http, MusicList, Music) {
     }
 
     //list for all users 
-    $scope.lists = MusicList.query({start: 0});
+    $scope.lists = MusicList.query({start: 0}, function(data) {
+        // console.log(data);
+        $scope.key = data[0].key;
+        $scope.current_channel = data[0].name;
+
+    });
     $scope.playthis = function(key, name) {
         // var listKey = key;
         $scope.key = key;
