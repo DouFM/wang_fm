@@ -13,5 +13,5 @@ def douban_spider_task():
     print 'tasks.spider_task.douban_spider_task: updated_channel %s' % (channels)
     for channel in get_channel():
         music_list = update_music_by_channel(channel, channel.update_num)
-        print u'tasks.spider_task.douban_spider_task: channel %s, updated_num %d' % (channel, len(music_list))
+        print (u'tasks.spider_task.douban_spider_task: channel %s, updated_num %d' % (channel, len(music_list))).encode('utf8')
     print 'tasks.spider_task.douban_spider_task: end %s' % (datetime.datetime.now())
