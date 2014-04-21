@@ -1,97 +1,26 @@
-﻿/*
+/*
 *    module
 */
-var fmApp = angular.module('FMApp', ['ngRoute', 'ngCookies', 'ngResource']);
-
+var fmApp = angular.module('FMApp', ['ngRoute', 'ngResource']);
 
 /*
 *   FMCtrl controller
 */
-function FMCtrl($scope, $http, MusicList, Music, User) {
+function FMCtrl($scope, $http, MusicList, Music) {
     angular.element(document).ready(function() {
-        navInit();
-        playerInit();
+        analysisUrl();
         $('ul.thumb li').Zoomer({speedView:200,speedRemove:400,altAnim:true,speedTitle:400,debug:false});
     });
 
-    //navbar initial
-    function navInit() {
-        $scope.currentUser = User.get({arg: 'current/'}, function(data) {
-            $scope.data = data;
-            // console.log(data);
-            if(data.name !== undefined) {
-                var loginBar = '<a target="_blank" href="/static/app/views/personal.html">' + data.name + '</a>';
-                var regBar = '<a href="#" onclick="logout()">退出</a>';
-                $('#loginBar').html(loginBar);
-                $('#regBar').html(regBar);
-
-                if(data.level === 'admin') {
-                    $('#gn-menu').append('<li id="mBar"><a target="_blank" href="/static/app/views/manager.html">管理</a></li><li style="border:0;"></li>');
-                } 
-            } 
-        });
-        // console.info($scope.currentUser);
-    }
-
-    //login logout and register
-    $scope.login = function() {
-        console.info('loign');
-        var loginname = $('#login_name').val();
-        var login_password = $('#login_password').val();
-        var loginData = {
-            arg: 'current/',
-            name: loginname,
-            password: login_password
-            // password: 'wang1129'
-        };
-        var loginInfo = User.login(loginData, function(data) {
-            var loginBar = '<a href="#">' + data.name + '</a>';
-            $('#login').modal('hide');
-            $('#loginBar').html(loginBar);
-            var regBar = '<li><a href="#" onclick="logout()">退出</a></li>';
-            $('#regBar').html(regBar);
-            if(data.level === 'admin') {
-                $('#gn-menu').append('<li id="mBar"><a  target="_blank" href="/static/app/views/manager.html">管理</a></li><li style="border:0;"></li>');
-            }
-        });
-    } 
-
-    $scope.reg = function() {
-        console.info('register');
-        var username = $("#username").val();
-        var password = $("#password").val();
-        var password2 = $("#password2").val();
-        if (username === '' || password === '' || password2 === '' || (password !== password2)) {
-            alert("please check your input");
-        } else {
-            var regData = {
-                name: username,
-                password: password 
-            };
-            console.log(regData);
-            $http.post('/api/user/', regData).success(function (data) {
-                console.log(data);
-                var loginData = {
-                    arg: 'current/',
-                    name: username,
-                    password: password
-                };
-                User.login(loginData, function(data) {
-                    var loginBar = '<a href="#">' + data.name + '</a>';
-                    $('#register').modal('hide');
-                    $('#loginBar').html(loginBar);
-                    var regBar = '<li><a href="#" onclick="logout()">退出</a></li>';
-                    $('#regBar').html(regBar);
-                });
-            });    
-        }
-    }
-
     //music player 
     $scope.index = 0;
-    $scope.key = "52f8ca1d1d41c851663fcba7";
+    //locale key
+    $scope.key = "52cac08c1d41c80eaec94c09";
+    //doufm key
+    // $scope.key = "52f8ca1d1d41c851663fcba7";
     $scope.current_channel = '华语';
-    function playerInit() {
+    
+    function playerInit(playReady, playEnded) {
         new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer_1",
             cssSelectorAncestor: "#jp_container_1"
@@ -106,7 +35,17 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             smoothPlayBar: true,
             keyEnabled: true
         });
-        // $("#jp-report").html('<a href="#" data-toggle="tooltip" data-placement="top" title="请注册后使用!" alt="report" ><img src="../images/report.png"></img></a>');
+        $('#jp-share').html('<a href="#" data-toggle="tooltip" title="分享给好友!"><img src="/static/app/images/share1.png"></a>');
+        
+        $('#jp-share').zclip({
+                path: '/static/app/vender/ZeroClipboard.swf',
+                copy: function(){
+                    return $scope.shareMsg.replace(/\<br \/\>/g, '\r\n');
+                },
+                afterCopy: function (){
+                    $('#share').modal('hide');
+                }
+            });
     }
 
     function playReady() {
@@ -115,7 +54,6 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             // console.info(data);
             // $scope.key = data[0].key;
             $scope.musics = MusicList.query({arg: $scope.key, num: 10}, function(data) {
-                // console.info(data[1]);
                 playMusic(data[$scope.index]);
             });
         });
@@ -136,10 +74,41 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
 
     function playMusic(musicArr){
         // console.info(musicArr);
+        var currentUrl = window.location.host;
+        // console.log(currentUrl);
+        $scope.shareMsg = '很好听的一首歌，快来听吧!<br />' + musicArr.artist + '--' + musicArr.title + "<br />http://" + currentUrl + '/#key=' + musicArr.key ;
+        $('#shareMsg').html($scope.shareMsg);
         $("#jquery_jplayer_1").jPlayer("setMedia", { mp3: musicArr.audio }).jPlayer("load").jPlayer("play");
         $("#jp-cover img").attr("src",musicArr.cover);
         $("#jp-singer").html(musicArr.artist);
         $("#nameAlbum").html(musicArr.title + '     ' + musicArr.album);
+    }
+
+    function analysisUrl () {
+        var url = window.location.href;
+        // console.log(url);
+        var shareKey = url.split('=')[1];
+        if(shareKey != null) {
+            playerInit(shareReady(shareKey), shareEnded);
+        } else {
+            playerInit(playReady, playEnded);
+            // console.log(url);
+        }
+    }
+
+    //share ready
+    var shareReady = function (shareKey) {
+        console.log(shareKey);
+        Music.query({key: shareKey}, function(data) {
+            console.log(data);
+            playMusic(data[0]);
+            $('#recentTenSongs').css('display', 'none');
+        });
+    }
+
+    //share ended
+    function shareEnded () {
+        $('#shareEnd').modal('show');
     }
 
     //click next button in the music player
@@ -173,18 +142,6 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             playMusic(data[0]);
         });
     }
-}
-
-function logout() {
-    console.info('logout');
-    $.ajax({
-        type: 'delete',
-        url: "/api/user/current/",
-        success: function() {
-            //console.info("logout");
-            window.location.href = '/static/app/views/index.html';
-        }
-    });
 }
 
 /*

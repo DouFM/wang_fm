@@ -49,13 +49,22 @@
 }
 #jp-nameAlbum {
 	height: 24px;
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
 	color: #009be3;
 	margin-top:15px;
 	margin-left:15px;
 	margin-right:10px;
 	border-bottom:1px solid #009be3;
 }
-#jp-report {
+#jp-share {
+	width: 30px;
+	height: 30px;
+	margin-top: 10px;
+	float:right;
+	margin-right:15px;
+	border:0px solid red;
+}
+/*#jp-report {
 	width: 25px;
 	height: 25px;
 	margin-top: 10px;
@@ -82,4 +91,4 @@
 	border:0px solid red;
 }
 #jp-favorite img {width:25px; height: 25px;}
-
+*/
