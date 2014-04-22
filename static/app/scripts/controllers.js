@@ -11,11 +11,8 @@ function FMCtrl($scope, $http, MusicList, Music) {
         analysisUrl();
         $('ul.thumb li').Zoomer({speedView:200,speedRemove:400,altAnim:true,speedTitle:400,debug:false});
     });
-
-    //music player 
-    $scope.index = 0;
-    //locale key
-    
+    //music label
+    $scope.index = 0;   
     
     function playerInit(playReady, playEnded) {
         new jPlayerPlaylist({
@@ -72,7 +69,6 @@ function FMCtrl($scope, $http, MusicList, Music) {
     function playMusic(musicArr){
         // console.info(musicArr);
         var currentUrl = window.location.host;
-        // console.log(currentUrl);
         $scope.shareMsg = '很好听的一首歌，快来听吧!<br />' + musicArr.artist + '--' + musicArr.title + "<br />http://" + currentUrl + '/#key=' + musicArr.key ;
         $('#shareMsg').html($scope.shareMsg);
         $("#jquery_jplayer_1").jPlayer("setMedia", { mp3: musicArr.audio }).jPlayer("load").jPlayer("play");
@@ -95,11 +91,15 @@ function FMCtrl($scope, $http, MusicList, Music) {
 
     //share ready
     var shareReady = function (shareKey) {
-        console.log(shareKey);
+        // console.log(shareKey);
         Music.query({key: shareKey}, function(data) {
-            console.log(data);
+            // console.log(data);
             playMusic(data[0]);
             $('#recentTenSongs').css('display', 'none');
+            $('#gn-menu li:first-child').css('display', 'none');
+            var homeUrl = 'http://' + window.location.host;
+            // console.log(homeUrl);
+            $('#current_channel').html('<a href="' + homeUrl + '">去主页瞧瞧~</a>').css('padding-left', '145px');
         });
     }
 
