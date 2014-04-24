@@ -115,6 +115,7 @@ def _update_channel_once(channel, max_num=10):
         # except:
         #     pass
     try:
+        print 'getting list'
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
     except requests.exceptions.ConnectionError:
         traceback.print_exc()
@@ -129,9 +130,11 @@ def _update_channel_once(channel, max_num=10):
         except:
             # ads
             continue
+        print uuid
         music = None
         if len(get_music(uuid=uuid)) == 0:
             try:
+                print 'getting song'
                 cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
                 audio_fd = requests.get(song['url'], stream=True, timeout=5).raw
             except requests.exceptions.ConnectionError:
