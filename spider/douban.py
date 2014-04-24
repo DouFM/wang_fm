@@ -8,6 +8,7 @@ import json
 import random
 import traceback
 import requests
+import requests.exceptions
 from model.channel import get_channel, add_channel, update_channel
 from model.music import get_music, add_music
 from config import DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD
@@ -27,7 +28,10 @@ def login():
                'version': DOUBAN_SPIDER_VERSION,
                'email': DOUBAN_USER_NAME,
                'password': DOUBAN_USER_PASSWORD}
-    r = requests.post("http://www.douban.com/j/app/login", data=payload)
+    try:
+        r = requests.post("http://www.douban.com/j/app/login", data=payload)
+    except requests.exceptions.ConnectionError:
+        return False
     r = json.loads(r.text)
     if r['r'] != 0:
         print 'spider.douban.login: failed. r=', r
@@ -112,7 +116,7 @@ def _update_channel_once(channel, max_num=10):
         #     pass
     try:
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
-    except:
+    except requests.exceptions.ConnectionError:
         traceback.print_exc()
         return []
     r = json.loads(r.text)
@@ -130,7 +134,7 @@ def _update_channel_once(channel, max_num=10):
             try:
                 cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
                 audio_fd = requests.get(song['url'], stream=True, timeout=5).raw
-            except:
+            except requests.exceptions.ConnectionError:
                 traceback.print_exc()
                 continue
             music = add_music(song['title'], song['artist'], song['albumtitle'],
