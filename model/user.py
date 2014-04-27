@@ -62,22 +62,28 @@ def add_user_history(user, op, music_key):
     new_favor = user.favor
     new_dislike = user.dislike
     new_listened = user.listened
+    new_shared = user.shared
     new_history.insert(0, [datetime.datetime.now(), op, music_key])
     if op == 'favor':
         if music_key in new_dislike:
             new_dislike.remove(music_key)
         if music_key not in new_favor:
             new_favor.insert(0, music_key)
-    if op == 'dislike':
+    elif op == 'dislike':
         if music_key in new_favor:
             new_favor.remove(music_key)
         if music_key not in new_dislike:
             new_dislike.insert(0, music_key)
-    if op == 'listened':
+    elif op == 'shared':
+        if music_key not in new_shared:
+            new_shared.insert(0, music_key)
+    elif op == 'listened':
         new_listened += 1
+    else:
+        assert False
 
     update_user(user, history=new_history, favor=new_favor,
-                dislike=new_dislike, listened=new_listened)
+                dislike=new_dislike, shared=new_shared, listened=new_listened)
 
 
 def get_user_history(user, start, end):

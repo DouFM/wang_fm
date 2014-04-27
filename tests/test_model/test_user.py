@@ -75,6 +75,12 @@ class test_user_model(BaseTest):
         assert len(user.history) == 4
         assert user.listened == 1
 
+        add_user_history(user, 'shared', 'f' * 24)
+        user = get_user(key=user.key)[0]
+        assert len(user.history) == 5
+        assert len(user.shared) == 1
+
+
     def test_get_user_history(self):
         # add user
         user = add_user('name1', 'pw1', 'normal')

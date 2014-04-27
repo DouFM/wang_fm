@@ -29,6 +29,7 @@ class UserStorage(BaseMongoStorage, mongoengine.Document):
     history = mongoengine.ListField()
     favor = mongoengine.ListField(mongoengine.StringField(max_length=24))
     dislike = mongoengine.ListField(mongoengine.StringField(max_length=24))
+    shared = mongoengine.ListField(mongoengine.StringField(max_length=24))
     listened = mongoengine.IntField(default=0)
 
     meta = {

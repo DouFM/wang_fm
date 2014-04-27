@@ -324,7 +324,7 @@
     * level: `normal`, `admin`
 
     * Arguments:
-        * `op`: 操作类型（`favor`, `dislike`, `listened`）
+        * `op`: 操作类型（`favor`, `dislike`, `shared`, `listened`）
         * `key`: 音乐key
 
     * Response: `None`
