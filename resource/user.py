@@ -42,7 +42,7 @@ class UserHistoryQueryArgs(BaseArgs):
 
 class UserHistoryPostArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('op', type=str, choices=('favor', 'dislike', 'listened'))
+        self.parser.add_argument('op', type=str, choices=('favor', 'dislike', 'shared', 'listened'))
         self.parser.add_argument('key', type=str)
 
 
