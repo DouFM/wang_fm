@@ -30,7 +30,9 @@ def login():
                'password': DOUBAN_USER_PASSWORD}
     try:
         r = requests.post("http://www.douban.com/j/app/login", data=payload)
-    except requests.exceptions.ConnectionError, requests.exceptions.Timeout:
+    except requests.exceptions.ConnectionError:
+        return False
+    except requests.exceptions.Timeout:
         return False
     r = json.loads(r.text)
     if r['r'] != 0:
@@ -117,7 +119,10 @@ def _update_channel_once(channel, max_num=10):
     try:
         print 'getting list'
         r = requests.get("http://www.douban.com/j/app/radio/people", params=payload, timeout=5)
-    except requests.exceptions.ConnectionError, requests.exceptions.Timeout:
+    except requests.exceptions.ConnectionError:
+        traceback.print_exc()
+        return []
+    except requests.exceptions.Timeout:
         traceback.print_exc()
         return []
     r = json.loads(r.text)
@@ -137,7 +142,10 @@ def _update_channel_once(channel, max_num=10):
                 print 'getting song'
                 cover_fd = requests.get(song['picture'], stream=True, timeout=5).raw
                 audio_fd = requests.get(song['url'], stream=True, timeout=5).raw
-            except requests.exceptions.ConnectionError, requests.exceptions.Timeout:
+            except requests.exceptions.ConnectionError:
+                traceback.print_exc()
+                continue
+            except requests.exceptions.Timeout:
                 traceback.print_exc()
                 continue
             music = add_music(song['title'], song['artist'], song['albumtitle'],
