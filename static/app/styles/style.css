@@ -7,16 +7,18 @@ body {
 }
 
 /*nav*/
-#current_channel {
+#currentChannel {
 	padding: 0 5px;
 	border: 0;
 }
-#current_channel img{
+#currentChannel img{
 	width:30px;height:25px;
 	padding-right:5px; 
 }
-#current_channel span{
+#currentChannel span{
 	color:#34495e;
+	font-size: 14px;
+	font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
 }
 
 #loginBar, #regBar, #mBar {
