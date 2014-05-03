@@ -9,6 +9,7 @@ var fmApp = angular.module('FMApp', ['ngRoute', 'ngResource']);
 function FMCtrl($scope, $http, MusicList, Music, User) {
     //DOM ready
     angular.element(document).ready(function() {      
+        
         //分析当前url判断是首次进入或者是点击分享链接进入（分享链接进入会传入参数key）
         (function analysisUrl () {
             //获取当前url中传入参数key，若为空则播放器进入正常初始化；
@@ -39,8 +40,7 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
                 } 
             });
         })();
-
-
+        
         $('ul.thumb li').Zoomer({speedView:200,speedRemove:400,altAnim:true,speedTitle:400,debug:false});
     });
 
@@ -57,7 +57,7 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             $scope.lists = MusicList.query(function(data) {
                 // console.log(data);
                 defaultKey = data[0].key;
-                // console.log(defaultKey);
+                console.log(defaultKey);
                 $scope.currentChannel = data[0].name;
                 Player.init(Player.playerReady, Player.playerEnded);
             });
@@ -80,8 +80,18 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
                 keyEnabled: true
             });        
 
+            $scope.currentUser = User.get({arg: 'current/'}, function(data) {
+                $scope.data = data;
+                console.log(data);
+                if(data.name !== undefined) {
+                    $http.get('/api/user/current/favor/', {'start' : 0, 'end' : 10}).success(function (data) {
+                        console.log(data);
+                    });
+                } 
+            });
+            
             //复制分享信息到剪切板
-            $('#jp-share').zclip({
+            $('#jp-shared').zclip({
                 path: '/static/app/vender/ZeroClipboard.swf',
                 copy: function(){
                     return $scope.shareMsg.replace(/\<br \/\>/g, '\r\n');
@@ -186,6 +196,37 @@ function FMCtrl($scope, $http, MusicList, Music, User) {
             });
         }
 
+        // trash button 
+        $scope.dislike = function () {
+            console.log('dislike');
+            var trashSrc = ['/static/app/images/trash2.png', '/static/app/images/trash.png'];
+            var postData = {
+                'op': 'dislike',
+                'key': defaultKey
+            };
+            var jpTrash = $('jp-trash img');
+            if (true) {
+            };
+            $http.post('/api/user/current/history/', postData).success(function (data) {
+                var jpTrash = $('#jp-trash img');
+                jpTrash.attr('src', trashSrc[1]);
+            });
+        }
+
+        // favorite button
+        $scope.like = function () {
+           
+            var favorSrc = ['/static/app/images/favorote2.png', '/static/app/images/favorite.png'];
+            var postData = {
+                'op': 'favor',
+                'key': defaultKey
+            };
+            $http.post('/api/user/current/history/', postData).success(function (data) {
+                console.log('like');
+                var jpFavor = $('#jp-favorite img');
+                jpFavor.attr('src', favorSrc[1]);
+            });
+        }
         return playerObj;
     })();
 

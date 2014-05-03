@@ -144,7 +144,14 @@
 	    	<div id="jp_container_1"> 
 		    	<div id="jp-cover"><img/></div>
         		<div class="jp-audio">
-        			<div id="jp-share" data-target="#share" data-toggle="modal"><a href="#" data-toggle="tooltip" title="分享给好友!"><img src="/static/app/images/share1.png"></a></div>
+        			<!-- ex-problem because conflict of ex-id 'jp-share' -->
+        			<div id="jp-shared" data-target="#share" data-toggle="modal"><a href="#" data-toggle="tooltip" title="分享给好友!"><img src="/static/app/images/share1.png"></a></div>
+        			<!-- trash button here -->
+        			<div id="jp-trash"><a href="#" data-toggle="tooltip" title="dislike" ng-click="dislike()"><img src="/static/app/images/trash2.png" /></a></div>
+
+        			<!-- favorite button here -->
+        			<div id="jp-favorite"><a href="#" data-toggle="tooltip" title="favorite" ng-click="like()"><img src="/static/app/images/favorite2.png" /></a></div>
+
         			<!--  share window -->
 					<div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
