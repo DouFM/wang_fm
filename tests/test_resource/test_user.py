@@ -133,9 +133,15 @@ class test_user_current_history_resource(BaseResourceTest):
                       data={'op': 'favor', 'key': music1.key})
         self.app.post('/api/user/current/history/',
                       data={'op': 'dislike', 'key': music2.key})
+        self.app.post('/api/user/current/history/',
+                      data={'op': 'listened', 'key': music2.key})
+        self.app.post('/api/user/current/history/',
+                      data={'op': 'shared', 'key': music2.key})
+        self.app.post('/api/user/current/history/',
+                      data={'op': 'unknown', 'key': music2.key})
         rv = self.app.get('/api/user/current/history/?start=0&end=10')
         rv = json.loads(rv.data)
-        assert len(rv) == 2
+        assert len(rv) == 4
 
 
 class test_user_current_favor_resource(BaseResourceTest):

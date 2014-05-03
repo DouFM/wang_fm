@@ -1,3 +1,7 @@
+# 注意
+
+请调用本API的所有app将自己的`User-Agent`设置为`应用名:版本号:联系方式`的形式，例如`MyApp:0.1:admin@doufm.info`，方便进行管理。
+
 # 用户权限
 
 用户总共分为3个权限，分别为
@@ -320,7 +324,7 @@
     * level: `normal`, `admin`
 
     * Arguments:
-        * `op`: 操作类型（`favor`, `dislike`, `listened`）
+        * `op`: 操作类型（`favor`, `dislike`, `shared`, `listened`）
         * `key`: 音乐key
 
     * Response: `None`
