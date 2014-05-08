@@ -120,6 +120,9 @@ class test_user_current_history_resource(BaseResourceTest):
         rv = self.app.get('/api/user/current/history/?start=0&end=10')
         rv = json.loads(rv.data)
         assert rv == []
+        rv = self.app.get('/api/user/current/history/?start=0')
+        rv = json.loads(rv.data)
+        assert rv == []
 
     def test_post(self):
         self.login_as_admin()   # this will add a user name admin!
@@ -143,6 +146,10 @@ class test_user_current_history_resource(BaseResourceTest):
         rv = json.loads(rv.data)
         assert len(rv) == 4
 
+        rv = self.app.get('/api/user/current/history/?start=0')
+        rv = json.loads(rv.data)
+        assert len(rv) == 4
+
 
 class test_user_current_favor_resource(BaseResourceTest):
     def test_get(self):
@@ -160,4 +167,9 @@ class test_user_current_favor_resource(BaseResourceTest):
         rv = self.app.get('/api/user/current/favor/?start=0&end=10')
         rv = json.loads(rv.data)
         # print rv
+        assert len(rv) == 2
+
+        rv = self.app.get('/api/user/current/favor/?start=0')
+        rv = json.loads(rv.data)
+        print rv
         assert len(rv) == 2

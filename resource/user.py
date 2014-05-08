@@ -139,6 +139,8 @@ class UserCurrentHistoryResource(Resource):
     def get(self):
         user = get_user(key=session['user'])[0]
         args = UserHistoryQueryArgs().args
+        if 'end' not in args:
+            args['end'] = None
         return marshal(get_user_history(user, args['start'], args['end']), history_fields)
 
     @authenticated('normal', 'admin')
@@ -153,4 +155,6 @@ class UserCurrentFavorResource(Resource):
     def get(self):
         user = get_user(key=session['user'])[0]
         args = UserHistoryQueryArgs().args  # use history query args
+        if 'end' not in args:
+            args['end'] = None
         return marshal(get_user_favor(user, args['start'], args['end']), music_fields)
