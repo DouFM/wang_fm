@@ -132,6 +132,11 @@ class test_user_current_history_resource(BaseResourceTest):
         self.audio.seek(0)
         music2 = add_music('title', 'artist', 'album', 'company',
                            '2013', '64', self.cover, self.audio, 'uuid2')
+
+        rv = self.app.get('/api/user/current/history/?start=0')
+        rv = json.loads(rv.data)
+        assert len(rv) == 0
+
         self.app.post('/api/user/current/history/',
                       data={'op': 'favor', 'key': music1.key})
         self.app.post('/api/user/current/history/',
@@ -160,6 +165,9 @@ class test_user_current_favor_resource(BaseResourceTest):
         self.audio.seek(0)
         music2 = add_music('title', 'artist', 'album', 'company',
                            '2013', '64', self.cover, self.audio, 'uuid2')
+        rv = self.app.get('/api/user/current/favor/?start=0')
+        rv = json.loads(rv.data)
+        assert len(rv) == 0
         self.app.post('/api/user/current/history/',
                       data={'op': 'favor', 'key': music1.key})
         self.app.post('/api/user/current/history/',
@@ -171,5 +179,4 @@ class test_user_current_favor_resource(BaseResourceTest):
 
         rv = self.app.get('/api/user/current/favor/?start=0')
         rv = json.loads(rv.data)
-        print rv
         assert len(rv) == 2
