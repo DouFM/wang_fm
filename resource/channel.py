@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask.ext.restful import Resource, fields, marshal_with, marshal
-from .base import BaseArgs, LengthField
+from .base import BaseArgs, LengthField, ChannelKey
 from model.channel import get_channel_status, get_channel, update_channel, delete_channel
 from utils import authenticated
 
@@ -10,7 +10,7 @@ class ChannelQueryArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
-        self.parser.add_argument('key', type=str)
+        self.parser.add_argument('key', type=ChannelKey)
         self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('playable', type=bool)
 

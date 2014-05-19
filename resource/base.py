@@ -2,6 +2,9 @@
 #coding:utf8
 from flask.ext.restful import reqparse
 from flask.ext.restful import fields
+from model.music import get_music
+from model.user import get_user
+from model.channel import get_channel
 
 
 class FileField(fields.Raw):
@@ -12,6 +15,38 @@ class FileField(fields.Raw):
 class LengthField(fields.Raw):
     def format(self, value):
         return len(value)
+
+
+def MusicKey(key):
+    try:
+        assert get_music(key=key)[0]
+    except:
+        raise ValueError("Invalid Music Key")
+    return key
+
+
+def UserKey(key):
+    try:
+        assert get_user(key=key)[0]
+    except:
+        raise ValueError("Invalid User Key")
+    return key
+
+
+def ChannelKey(key):
+    try:
+        assert get_channel(key=key)[0]
+    except:
+        raise ValueError("Invalid Channel Key")
+    return key
+
+
+def PlaylistKey(key):
+    try:
+        assert get_channel(key=key)[0]
+    except:
+        raise ValueError("Invalid Playlist Key")
+    return key
 
 
 class RequestParser(reqparse.RequestParser):

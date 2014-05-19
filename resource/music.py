@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask.ext.restful import Resource, fields, marshal_with, marshal
-from .base import BaseArgs, FileField
+from .base import BaseArgs, FileField, MusicKey
 from model.music import get_music, update_music, delete_music, get_music_status
 from utils import authenticated
 
@@ -10,7 +10,7 @@ class MusicQueryArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
-        self.parser.add_argument('key', type=str)
+        self.parser.add_argument('key', type=MusicKey)
         self.parser.add_argument('title', type=unicode)
         self.parser.add_argument('artist', type=unicode)
         self.parser.add_argument('album', type=unicode)

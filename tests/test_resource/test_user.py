@@ -27,18 +27,18 @@ class test_user_list_resource(BaseResourceTest):
 
     def test_post(self):
         self.app.post('/api/user/',
-                      data={'name': 'name1',
-                            'password': 'pw1'})
+                      data={'name': u'姓名',
+                            'password': u'密码'})
         self.login_as_admin()
-        rv = self.app.get('/api/user/?name=name1')
+        rv = self.app.get(u'/api/user/?name=姓名')
         rv = json.loads(rv.data)[0]
         #print rv
-        assert rv['name'] == 'name1'
+        assert rv['name'] == u'姓名'
         assert rv['level'] == 'normal'
 
         rv = self.app.post('/api/user/',
-                           data={'name': 'name1',
-                                 'password': 'pw1'})
+                           data={'name': u'姓名',
+                                 'password': u'密码'})
         rv = json.loads(rv.data)
         assert rv is None
 
@@ -168,10 +168,16 @@ class test_user_current_favor_resource(BaseResourceTest):
         rv = self.app.get('/api/user/current/favor/?start=0')
         rv = json.loads(rv.data)
         assert len(rv) == 0
-        self.app.post('/api/user/current/history/',
+        rv = self.app.post('/api/user/current/history/',
                       data={'op': 'favor', 'key': music1.key})
-        self.app.post('/api/user/current/history/',
+        print rv.status
+        assert rv.status_code == 200
+        rv = self.app.post('/api/user/current/history/',
                       data={'op': 'favor', 'key': music2.key})
+        assert rv.status_code == 200
+        rv = self.app.post('/api/user/current/history/',
+                      data={'op': 'favor', 'key': 'unknown key'})
+        assert rv.status_code == 400
         rv = self.app.get('/api/user/current/favor/?start=0&end=10')
         rv = json.loads(rv.data)
         # print rv

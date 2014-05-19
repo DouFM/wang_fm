@@ -2,7 +2,7 @@
 # encoding: utf-8
 from flask import session
 from flask.ext.restful import Resource, fields, marshal_with, marshal
-from .base import BaseArgs, LengthField, FileField
+from .base import BaseArgs, LengthField, FileField, MusicKey, UserKey
 from model.user import get_user_status, get_user, add_user, update_user, delete_user, check_user_password, check_user_enable, get_user_history, add_user_history, get_user_favor
 from utils import authenticated
 
@@ -11,7 +11,7 @@ class UserQueryArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
-        self.parser.add_argument('key', type=str)
+        self.parser.add_argument('key', type=UserKey)
         self.parser.add_argument('name', type=unicode)
         self.parser.add_argument('level', type=str, choices=('disable', 'nromal', 'admin'))
 
@@ -19,19 +19,19 @@ class UserQueryArgs(BaseArgs):
 class UserRegArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('name', type=unicode)
-        self.parser.add_argument('password', type=str)
+        self.parser.add_argument('password', type=unicode)
 
 
 class UserPatchArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('password', type=str)
+        self.parser.add_argument('password', type=unicode)
         self.parser.add_argument('level', type=str, choices=('disable', 'nromal', 'admin'))
 
 
 class UserLoginArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('name', type=unicode)
-        self.parser.add_argument('password', type=str)
+        self.parser.add_argument('password', type=unicode)
 
 
 class UserHistoryQueryArgs(BaseArgs):
@@ -43,7 +43,7 @@ class UserHistoryQueryArgs(BaseArgs):
 class UserHistoryPostArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('op', type=str, choices=('favor', 'dislike', 'shared', 'listened'))
-        self.parser.add_argument('key', type=str)
+        self.parser.add_argument('key', type=MusicKey)
 
 
 user_status_fields = {
