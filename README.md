@@ -16,6 +16,18 @@ refactor of miao_fm
 5. requests==2.1.0
 6. APScheduler==2.1.1
 
+## Install
+	# You need to install Python, pip, virtualenv, MongoDB first.
+	virtualenv doufm
+	cd doufm
+	git clone https://github.com/DouFM/wang_fm
+	pip install -r wang_fm/requirements.txt
+	. bin/activate
+	cd wang_fm
+	python manager.py setup
+	python manager.py auto_update  # This needs to be stopped manually
+	python manager.py runserver
+
 ## Test
 use [nose](https://nose.readthedocs.org/en/latest/) to test all.
 
@@ -24,5 +36,5 @@ run `nosetests -vv`
 ## manager.py
 
 1. use `./manager.py setup` to setup db.
-2. use `./manager.py runserver` to run server.(this needs to keep running)
-3. use `./manager.py tasks` to run tasks.(this needs to keep running)
+2. use `./manager.py runserver` to run server. (This needs to keep running)
+3. use `./manager.py tasks` to run tasks. (This needs to keep running)
