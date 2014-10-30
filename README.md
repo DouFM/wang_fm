@@ -1,6 +1,6 @@
 # wang_fm
 
-Refactor of [pmiao_fm](https://github.com/dccrazyboy/miao_fm)
+Refactor of [miao_fm](https://github.com/dccrazyboy/miao_fm)
 
 ## Depends
 
