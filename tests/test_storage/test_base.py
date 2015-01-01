@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #coding:utf8
 import mongoengine
-from storage.base import BaseMongoStorage
-from utils import BaseTest
+
+from database.base_storage import BaseMongoStorage
+from utility.utils import BaseTest
 
 
 class demo_mongo_storage(BaseMongoStorage, mongoengine.Document):

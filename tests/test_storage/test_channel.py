@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #coding:utf8
 import datetime
-from storage.channel import ChannelStorage
-from utils import BaseTest
+
+from database.channel.channel_storage import ChannelStorage
+from utility.utils import BaseTest
 
 
 class test_channel_storage(BaseTest):

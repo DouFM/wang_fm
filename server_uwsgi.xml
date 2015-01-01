@@ -1,0 +1,8 @@
+<uwsgi>
+    <pythonpath>/home/lintong/Flask/doufm</pythonpath>
+    <module>fm</module>
+    <callable>app</callable>
+    <socket>0.0.0.0:5000</socket>
+    <master/>
+    <process>4</process>
+</uwsgi>

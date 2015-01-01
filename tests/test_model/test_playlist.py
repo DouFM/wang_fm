@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from model.playlist import get_music_by_channel
-from model.channel import add_channel, update_channel, get_channel
-from model.music import add_music
-from utils import BaseTest
+from database.playlist.playlist import get_music_by_channel
+from database.channel.channel_model import add_channel, update_channel, get_channel
+from database.music.music_model import add_music
+from utility.utils import BaseTest
 
 
 class test_playlist_model(BaseTest):

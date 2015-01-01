@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FMApp">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>个人信息</title>	
+
+		<!---bootstrap-->
+		<link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<!---bootstrap end-->
+
+		<!---my css-->
+		<link href="../styles/style.css" rel="stylesheet" type="text/css" />
+		<!---my css end-->
+
+		<!---JS-->
+		<script type="text/javascript" src="../vender/jquery.min.js"></script>
+
+		<!---angularJS -->
+		<script type="text/javascript" src="../vender/angularJS/angular.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-route.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="../vender/angularJS/angular-resource.min.js"></script>
+		<!---angularJS -->
+
+		<!---my JS -->
+		<script type="text/javascript" src="../scripts/controllers.js"></script>
+		<script type="text/javascript" src="../scripts/services.js"></script>
+		<!---my JS -->
+
+		<script type="text/javascript" src="../vender/bootstrap.min.js"></script>
+		<!---JS-->
+	</head>
+	<body ng-controller="personalCtrl">
+		<div id="myTitle" class="page-header">
+		  <h1>{{currentUser.name}}' <small>Home Page</small></h1>
+		</div>
+		
+		<div id="personal">
+			<div class="col-sm-2">
+				<ul class="nav nav-pills nav-stacked nav-tabs">
+					<li class="active"><a href="/#info" data-toggle="tab">&nbsp;&nbsp;&nbsp;&nbsp;个人信息</a></li>
+					<li><a href="/#history" data-toggle="tab">&nbsp;&nbsp;&nbsp;&nbsp;历史列表</a></li>
+				</ul>	
+			</div>
+			<div class="col-sm-10">
+			    <div class="tab-content">
+			    	<!-- 个人信息 -->
+			        <div class="tab-pane fade in active" id="info">
+			          	<ul id="musicTab" class="nav nav-tabs">
+					        <li class="active"><a href="/#myInfo" data-toggle="tab">个人信息</a></li>
+					    </ul>
+					    <div id="musicTabContent" class="tab-content">
+					        <div class="tab-pane fade in active" id="myInfo">
+							   	<p>{{currentUser.name}}</p>
+								<p>{{currentUser.listened}}</p>
+					        	<p>{{currentUser.regist_date}}</p>
+					        	<!-- <p>{{currentUser}}</p> -->        		
+					        </div>
+					    </div>  	
+			        </div>
+			        <!-- 个人信息 -->
+			        <!-- 历史列表 -->
+			        <div class="tab-pane fade" id="history">
+			        	<ul id="musicTab" class="nav nav-tabs">
+					        <li class="active"><a href="/#myHistory" data-toggle="tab">历史列表</a></li>
+					    </ul>
+					    <div id="musicTabContent" class="tab-content">
+					        <div class="tab-pane fade in active" id="myHistory">
+					        </div>
+					    </div>  	
+			        </div>
+			        <!-- 历史列表 -->
+			    </div>
+			</div>
+		</div>
+	</body>
+</html>

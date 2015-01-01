@@ -1,0 +1,117 @@
+/*
+ * index css 
+*/
+
+body {
+	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
+}
+
+/*nav*/
+#currentChannel {
+	padding: 0 5px;
+	border: 0;
+}
+#currentChannel img{
+	width:30px;height:25px;
+	padding-right:5px; 
+}
+#currentChannel span{
+	color:#34495e;
+	font-size: 14px;
+	font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
+}
+
+#loginBar, #regBar, #mBar {
+	width: 100px;
+	padding: 0px;
+	font-size: 13px;
+	text-align: center;
+	list-style: none;
+	border: 0px;
+} 
+
+#content {
+	float: left; 
+	color: #fff;
+	width: 40%;
+	font-size: 16px;
+	padding: 200px 0 0 140px;
+}
+
+#content h1, p, span {	font-family:"Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu}
+#content a{
+	text-decoration: none;
+}
+
+#content a:hover {
+	color: #000;
+}
+
+#content span {
+	font-size: 15px;
+}
+
+/*music player*/
+#musicPanel {
+	float: right;
+	padding: 150px 50px 0 0;
+	width: 50%;
+	height:390px;
+}
+
+#recentTenSongs {
+	margin: 15px;
+	margin-left:0px;
+}
+
+#recentTenSongs table td{
+	float: left;
+	width: 93px;
+	height: 93px;
+}
+
+#recentTenSongs table td img {
+	width: 95px;
+	height: 95px;
+}
+
+.clear {clear: both;}
+
+ul.thumb {
+	float: left;
+	list-style: none;
+	margin-left: 10px; 
+	margin-top: 10px;
+	padding: 0px;
+	width: 500px;
+}
+ul.thumb li {
+	margin: 0; 
+	padding-top: 0px;
+	float: left;
+	position: relative;
+	width: 95px;
+	height: 95px;
+}
+
+ul.thumb li img {width: 92px; height: 92px;border: 1px solid #ddd;padding: 0px;background: #34495e;position: absolute;left: 0; top: 0;-ms-interpolation-mode: bicubic; }
+ul.thumb li img.hover {margin: 0px;border: none;}
+.title{position:absolute;width:175px;height:20px;margin:0;font-weight:900;background-color: #eee;padding:2px 0 0 0;text-align:center; color: #34495e; }
+
+
+/*
+ * manager and personal page css
+*/
+#manager, #personal{
+	margin-top: 40px;
+	margin-left: 50px;
+}
+
+#managerTitle, #myTitle {
+	margin-top: 0px;
+	padding: 20px;
+	padding-left: 60px;
+	color: #000;
+	background-color: #eee;
+}
+

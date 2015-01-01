@@ -56,19 +56,23 @@
 	margin-right:10px;
 	border-bottom:1px solid #009be3;
 }
-
-#jp-shared {
-	width: 30px;
-	height: 30px;
+#jp-share {
+	width: 25px;
+	height: 25px;
 	margin-top: 10px;
 	float:right;
 	margin-right:15px;
 	border:0px solid red;
 }
-#jp-shared img {width:25px; height: 25px;}
-#jp-shared img:hover { width:30px; height: 30px;}
-
-
+#jp-report {
+	width: 25px;
+	height: 25px;
+	margin-top: 10px;
+	float:right;
+	margin-right:15px;
+	border:0px solid red;
+}
+#jp-report img {width:25px; height: 25px;}
 #jp-trash {
 	width: 25px;
 	height: 25px;
@@ -78,8 +82,6 @@
 	border:0px solid red;
 }
 #jp-trash img {width:25px; height: 25px;}
-#jp-trash img:hover { width:30px; height: 30px;}
-
 #jp-favorite {
 	width: 25px;
 	height: 25px;
@@ -89,5 +91,4 @@
 	border:0px solid red;
 }
 #jp-favorite img {width:25px; height: 25px;}
-#jp-favorite img:hover { width:30px; height: 30px;}
 

@@ -8,7 +8,7 @@ body {
 
 /*nav*/
 #currentChannel {
-	padding: 0 5px;
+	padding: 0 0px;
 	border: 0;
 }
 #currentChannel img{
@@ -17,8 +17,7 @@ body {
 }
 #currentChannel span{
 	color:#34495e;
-	font-size: 14px;
-	font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
+	font-size: 19px;
 }
 
 #loginBar, #regBar, #mBar {
@@ -115,3 +114,5 @@ ul.thumb li img.hover {margin: 0px;border: none;}
 	background-color: #eee;
 }
 
+#login,#login_process{margin-right: 150px}
+.loginSuccess{margin-right: 100px}
