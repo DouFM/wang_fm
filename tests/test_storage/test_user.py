@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #coding:utf8
 import datetime
-from storage.user import UserStorage
-from utils import BaseTest
+
+from database.user.user_storage import UserStorage
+from utility.utils import BaseTest
 
 
 class test_user_storage(BaseTest):

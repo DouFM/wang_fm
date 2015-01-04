@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import datetime
-from storage.music import MusicStorage
-from utils import BaseTest
+
+from database.music.music_storage import MusicStorage
+from utility.utils import BaseTest
 
 
 class test_music_storage(BaseTest):

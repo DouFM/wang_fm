@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #coding:utf8
-from model.music import get_music
-from model.channel import get_channel
-from spider.douban import login, update_channel_list, update_music_by_channel
-from utils import BaseTest
+from database.music.music_model import get_music
+from database.channel.channel_model import get_channel
+from crawler.spider import login, update_channel_list, update_music_by_channel
+from utility.utils import BaseTest
 
 
 class test_douban(BaseTest):

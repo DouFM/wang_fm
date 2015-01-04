@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from model.channel import add_channel, get_channel, update_channel, delete_channel
-from utils import BaseTest
+from database.channel.channel_model import add_channel, get_channel, update_channel, delete_channel
+from utility.utils import BaseTest
 
 
 class test_channel_model(BaseTest):

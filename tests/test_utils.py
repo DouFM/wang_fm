@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 #coding:utf8
 import json
+
 from flask.ext.restful import Api, Resource
-from utils import BaseTest, BaseResourceTest, authenticated
-from model.user import add_user
+
+from utility.utils import BaseTest, BaseResourceTest, authenticated
+from database.user.user_model import add_user
 
 
 class test_base_test(BaseTest):

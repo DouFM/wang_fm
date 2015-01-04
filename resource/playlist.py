@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask.ext.restful import Resource, fields, marshal
+
 from .base import BaseArgs, LengthField, FileField
-from model.playlist import get_music_by_channel
-from model.channel import get_channel
+from resource.music import music_fields
+from database.playlist.playlist import get_music_by_channel
+from database.channel.channel_model import get_channel
 
 
 class PlaylistQueryArgs(BaseArgs):
@@ -15,18 +17,6 @@ playlist_fields = {
     'key': fields.String,
     'name': fields.String,
     'music_list': LengthField,
-}
-
-music_fields = {
-    'key': fields.String,
-    'title': fields.String,
-    'artist': fields.String,
-    'album': fields.String,
-    'company': fields.String,
-    'public_time': fields.String,
-    'kbps': fields.String,
-    'cover': FileField,
-    'audio': FileField,
 }
 
 
@@ -42,3 +32,4 @@ class PlaylistResource(Resource):
         num = args['num']
         channel = get_channel(key=key)[0]
         return marshal(get_music_by_channel(channel, num), music_fields)
+
