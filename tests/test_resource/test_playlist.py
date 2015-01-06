@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import json
-
-from database.channel.channel_model import add_channel, update_channel
-from database.music.music_model import add_music
-from utility.utils import BaseResourceTest
+from model.channel import add_channel, update_channel
+from model.music import add_music
+from utils import BaseResourceTest
 
 
 class test_playlist_list_resource(BaseResourceTest):

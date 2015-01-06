@@ -2,9 +2,8 @@
 # encoding: utf-8
 import mongoengine
 import mongoengine.errors
-
-from database.music.music_model import add_music, get_music, update_music, delete_music, get_music_status
-from utility.utils import BaseTest
+from model.music import add_music, get_music, update_music, delete_music, get_music_status
+from utils import BaseTest
 
 
 class test_music_model(BaseTest):
