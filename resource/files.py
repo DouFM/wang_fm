@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
-import mongoengine.fields
 from flask import Response
+import mongoengine.fields
+
 from bson.objectid import ObjectId
+
 from flask.ext.restful import Resource
 
 

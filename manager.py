@@ -1,25 +1,29 @@
 #!/usr/bin/env python
 #coding:utf8
-import time
 import random
 import datetime
-
 from apscheduler.scheduler import Scheduler
+
 from flask.ext.script import Manager
 from fm import app
-from crawler.spider import login, update_channel_list, update_music_by_channel
-from database.channel.channel_model import get_channel, update_channel
-from database.music.music_model import get_music
-from crawler.spider_task import douban_spider_task
-from log.spider import spider_task_log
+from model.user import add_user
+from spider.douban import login, update_channel_list, update_music_by_channel
+from model.channel import get_channel, update_channel
+from tasks.spider_task import douban_spider_task
+from config import ADMIN_NAME, ADMIN_PASSWORD
 
 manager = Manager(app)
 
 
 @manager.command
 def setup():
-    """setup db & update channel & get demo music"""
+    '''setup db & update channel & get demo music'''
     print 'setuping...'
+    print 'setting admin'
+    try:
+        assert add_user(ADMIN_NAME, ADMIN_PASSWORD, 'admin'), 'admin already exist!!!this will pass'
+    except:
+        pass
     print 'login douban...'
     assert login(), 'check network or the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
     print 'update channel list'
@@ -34,7 +38,7 @@ def setup():
 
 @manager.command
 def update_channel_num(uuid, num):
-    """update channel by uuid and num"""
+    '''update channel by uuid and num'''
     num = int(num)
     print uuid, num
     channel = get_channel(uuid=uuid)[0]
@@ -47,7 +51,7 @@ def update_channel_num(uuid, num):
 
 @manager.command
 def auto_update():
-    """update until stop manually"""
+    '''update until stop manually'''
     assert login(), 'check network or the DOUBAN_USER_NAME, DOUBAN_USER_PASSWORD in config.py'
     channels = get_channel(playable=True)
     while True:
@@ -60,54 +64,44 @@ def auto_update():
 
 @manager.command
 def channels(uuid=None):
-    """get one/all channels in db"""
+    '''get one/all channels in db'''
     if not uuid:
-        channel_list = get_channel()
+        print 'uuid\t\tname\t\tmusic_num\t\tplayable'
+        for channel in get_channel():
+            print '%s\t\t%s\t\t%s\t\t%s' % (
+                channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), channel.playable)
     else:
-        channel_list = get_channel(uuid=uuid)
-
-    print 'key\t\t\t\tuuid\t\t\t\tname\t\t\t\tmusic_num\t\t\t\tplayable'
-    for channel in channel_list:
-        print '%s\t\t%s\t\t%s\t\t%s\t\t%s' % (
-           channel.key.encode('utf-8'), channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), channel.playable)
+        channel = get_channel(uuid=uuid)[0]
+        print 'uuid\t\tname'
+        print '%s\t\t%s\t\t%s\t\t%s' % (
+            channel.uuid.encode('utf8'), channel.name.encode('utf8'), len(channel.music_list), channel.playable)
 
 
 @manager.command
 def enable_channel(uuid):
-    """set channel playable"""
+    '''set channel playable'''
     channel = get_channel(uuid=uuid)[0]
     update_channel(channel, playable=True)
 
 
 @manager.command
 def disable_channel(uuid):
-    """set channel not playable"""
+    '''set channel not playable'''
     channel = get_channel(uuid=uuid)[0]
     update_channel(channel, playable=False)
 
 
-
-@manager.command
-def music(uuid=None):
-    if not uuid:
-        music_list = get_music()
-    else:
-        music_list = get_music(uuid=uuid)
-
-    print 'key\t\t\t\t\t\tuuid\t\t\t\t\t\ttitle\t\t\t\t\t\tartist'
-    for music in music_list:
-        print '%s\t\t%s\t\t%s\t\t\t\t%s' % (
-            music.key.encode('utf-8'), music.uuid.encode('utf8'), music.title.encode('utf8'), music.artist.encode('utf-8'))
-
 @manager.command
 def tasks(hour):
-    """run tasks, keep it running for crawler"""
+    '''run tasks, keep it running for spider'''
+    import logging
+    logging.basicConfig()
     sched = Scheduler(standalone=True)
     # http://pythonhosted.org/APScheduler/modules/scheduler.html
     sched.add_cron_job(douban_spider_task, hour=int(hour))
+    # sched.add_interval_job(douban_spider_task, seconds=10)
+    print 'start tasks at', datetime.datetime.now()
     sched.start()
-    info = 'start tasks at' + datetime.datetime.now().strftime('%y-%m-%d %H:%M:%S')
-    spider_task_log.log_info(info)
 
 
 if __name__ == "__main__":

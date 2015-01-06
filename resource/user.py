@@ -1,24 +1,40 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask import session
-from flask.ext.restful import fields, marshal, Resource
-
-from base import BaseArgs, LengthField, MusicKey
-from base import login_check, update_login_user_table
-from database.user.login_user_model import delete_login_user, get_login_user
-from music import music_fields
-from database.user.user_model import *
-from log.login import login_log
+from flask.ext.restful import Resource, fields, marshal_with, marshal
+from .base import BaseArgs, LengthField, FileField, MusicKey, UserKey
+from model.user import get_user_status, get_user, add_user, update_user, delete_user, check_user_password, check_user_enable, get_user_history, add_user_history, get_user_favor
+from utils import authenticated
 
 
-class UserMusicQueryArgs(BaseArgs):
+class UserQueryArgs(BaseArgs):
     def rules(self):
-        self.parser.add_argument('type', type=str, choices=('favor', 'dislike', 'shared', 'listened'))
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
+        self.parser.add_argument('key', type=UserKey)
+        self.parser.add_argument('name', type=unicode)
+        self.parser.add_argument('level', type=str, choices=('disable', 'nromal', 'admin'))
 
 
-class UserHistoryGetArgs(BaseArgs):
+class UserRegArgs(BaseArgs):
+    def rules(self):
+        self.parser.add_argument('name', type=unicode)
+        self.parser.add_argument('password', type=unicode)
+
+
+class UserPatchArgs(BaseArgs):
+    def rules(self):
+        self.parser.add_argument('password', type=unicode)
+        self.parser.add_argument('level', type=str, choices=('disable', 'nromal', 'admin'))
+
+
+class UserLoginArgs(BaseArgs):
+    def rules(self):
+        self.parser.add_argument('name', type=unicode)
+        self.parser.add_argument('password', type=unicode)
+
+
+class UserHistoryQueryArgs(BaseArgs):
     def rules(self):
         self.parser.add_argument('start', type=int)
         self.parser.add_argument('end', type=int)
@@ -34,15 +50,26 @@ user_status_fields = {
     'count': fields.Integer
 }
 
-status_fields = {
-    'status': fields.String
+user_fields = {
+    'key': fields.String,
+    'name': fields.String,
+    'level': fields.String,
+    'regist_date': fields.DateTime,
+    'favor': LengthField,
+    'dislike': LengthField,
+    'listened': fields.Integer,
 }
 
-user_fields = {
-    'favor': LengthField,
-    'share': LengthField,
-    'dislike': LengthField,
-    'listened': LengthField
+music_fields = {
+    'key': fields.String,
+    'title': fields.String,
+    'artist': fields.String,
+    'album': fields.String,
+    'company': fields.String,
+    'public_time': fields.String,
+    'kbps': fields.String,
+    'cover': FileField,
+    'audio': FileField,
 }
 
 history_fields = {
@@ -50,62 +77,88 @@ history_fields = {
     'op': fields.String,
     'key': fields.String,
     'title': fields.String,
-    'audio': fields.String,
-    'cover': fields.String,
+    'cover': FileField,
 }
 
 
-class UserLogoutResource(Resource):
-
+class UserListResource(Resource):
+    @authenticated('admin')
     def get(self):
-        ret = {}
-        if not login_check(session):
-            ret['status'] = 'have not login'
-        else:
-            info = 'user %s logout', session['login_user']
-            login_log.log_info(info)
-            user = get_login_user(user_id=session['login_user'])[0]
-            delete_login_user(user)
-            session.pop('login_user', None)
-            ret['status'] = 'success'
-        return marshal(ret, status_fields)
-
-
-class UserProfileResource(Resource):
-    def get(self):
-        if not login_check(session):
-            return None
-        user = get_user(user_id=session['login_user'])[0]
-        return marshal(user, user_fields)
-
-
-class UserHistoryResource(Resource):
-
-    def get(self):
-        args = UserHistoryGetArgs().args
-        if not login_check(session):
-            return None
-        user = get_user(user_id=session['login_user'])[0]
-        history = get_user_history(user, args['start'], args['end'])
-        return marshal(history, history_fields)
+        args = UserQueryArgs().args
+        if args == {}:
+            return marshal(get_user_status(), user_status_fields)
+        users = get_user(**args)
+        return marshal(users, user_fields)
 
     def post(self):
-        args = UserHistoryPostArgs().args
-        if not login_check(session):
-            return None
-        user = get_user(user_id=session['login_user'])[0]
-        add_user_history(user, args['op'], args['key'])
-        update_login_user_table(session['login_user'])
-        return marshal({'status':args['op'] + '_success'}, status_fields)
+        args = UserRegArgs().args
+        user = add_user(args['name'], args['password'], 'normal')
+        if user:
+            return marshal(user, user_fields)
+        return None
 
 
-class UserMusicResource(Resource):
+class UserResource(Resource):
+    @authenticated('admin')
+    @marshal_with(user_fields)
+    def patch(self, key):
+        args = UserPatchArgs().args
+        user = get_user(key=key)[0]
+        update_user(user, **args)
+        user = get_user(key=key)[0]
+        return user
 
+    @authenticated('admin')
+    def delete(self, key):
+        user = get_user(key=key)[0]
+        delete_user(user)
+
+
+class UserCurrentResource(Resource):
     def get(self):
-        args = UserMusicQueryArgs().args
-        if not login_check(session):
+        try:
+            user = get_user(key=session['user'])[0]
+            return marshal(user, user_fields)
+        except:
             return None
-        user = get_user(user_id=session['login_user'])[0]
-        music_list = get_user_music_list(user, args['type'], args['start'], args['end'])
-        update_login_user_table(session['login_user'])
-        return marshal(music_list, music_fields)
+
+    def post(self):
+        args = UserLoginArgs().args
+        user = get_user(name=args['name'])[0]
+        if check_user_password(user, args['password']) and check_user_enable(user):
+            session['user'] = user.key
+            return marshal(user, user_fields)
+        return None
+
+    def delete(self):
+        session.pop('user', None)
+
+
+class UserCurrentHistoryResource(Resource):
+    @authenticated('normal', 'admin')
+    def get(self):
+        user = get_user(key=session['user'])[0]
+        args = UserHistoryQueryArgs().args
+        if 'start' not in args:
+            args['start'] = None
+        if 'end' not in args:
+            args['end'] = None
+        return marshal(get_user_history(user, args['start'], args['end']), history_fields)
+
+    @authenticated('normal', 'admin')
+    def post(self):
+        user = get_user(key=session['user'])[0]
+        args = UserHistoryPostArgs().args
+        add_user_history(user, args['op'], args['key'])
+
+
+class UserCurrentFavorResource(Resource):
+    @authenticated('normal', 'admin')
+    def get(self):
+        user = get_user(key=session['user'])[0]
+        args = UserHistoryQueryArgs().args  # use history query args
+        if 'start' not in args:
+            args['start'] = None
+        if 'end' not in args:
+            args['end'] = None
+        return marshal(get_user_favor(user, args['start'], args['end']), music_fields)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import mongoengine.fields
-
-from utility.utils import BaseResourceTest
+from utils import BaseResourceTest
 
 
 class test_file_resource(BaseResourceTest):

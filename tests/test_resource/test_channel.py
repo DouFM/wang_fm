@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import json
-
-from database.channel.channel_model import add_channel, get_channel
-from utility.utils import BaseResourceTest
+from model.channel import add_channel, get_channel
+from utils import BaseResourceTest
 
 
 class test_channel_list_resource(BaseResourceTest):

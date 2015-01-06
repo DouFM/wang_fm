@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from database.user.user_model import add_user, get_user, update_user, delete_user, _encrypt, check_user_password, add_user_history, get_user_history
-from database.music.music_model import add_music
-from utility.utils import BaseTest
+from model.user import add_user, get_user, update_user, delete_user, _encrypt, check_user_password, add_user_history, get_user_history
+from model.music import add_music
+from utils import BaseTest
 
 
 class test_user_model(BaseTest):

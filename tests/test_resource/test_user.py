@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import json
-
-from database.user.user_model import add_user, get_user, check_user_password
-from database.music.music_model import add_music
-from utility.utils import BaseResourceTest
+from model.user import add_user, get_user, check_user_password
+from model.music import add_music
+from utils import BaseResourceTest
 
 
 class test_user_list_resource(BaseResourceTest):

@@ -4,4 +4,3 @@ Flask-Script==0.6.6
 mongoengine==0.8.6
 requests==2.1.0
 APScheduler==2.1.1
-
